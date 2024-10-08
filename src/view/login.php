@@ -40,7 +40,10 @@
                                     <?php
                                     // Verificar si el formulario ha sido enviado
                                     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                                        include 'conexion.php'; // Incluye la conexión a la base de datos
+                                        $server = "localhost";
+                                        $user = "root";
+                                        $password = "";
+                                        $database = "registros_academicos";// Incluye la conexión a la base de datos
 
                                         $email = $_POST['email'];
                                         $password = $_POST['password'];
