@@ -70,19 +70,6 @@ $result = $conn->query($sql);
 
 <body>
     <header>
-        <?php
-
-if (isset($_SESSION['usuario'])) {
-    $nombre = $_SESSION['usuario']['nombre'];
-    $apellido = $_SESSION['usuario']['apellido'];
-    $email = $_SESSION['usuario']['email'];
-} else {
-    $nombre = "Invitado";
-    $apellido = "";
-    $email = "No disponible";
-}
-?>
-
         <nav class="navbar navbar-expand-lg bg-primary-subtle">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Sistema Virtual</a>
@@ -115,6 +102,17 @@ if (isset($_SESSION['usuario'])) {
                                 <img class="rounded-circle me-3" style="width: 50px; height: 50px;"
                                     src="/assets/img/logo/profile-1.png" alt="User Avatar">
                                 <div>
+                                    <?php
+                                        if (isset($_SESSION['usuario'])) {
+                                            $nombre = $_SESSION['usuario']['nombre'];
+                                            $apellido = $_SESSION['usuario']['apellido'];
+                                            $email = $_SESSION['usuario']['email'];
+                                        } else {
+                                            $nombre = "Invitado";
+                                            $apellido = "";
+                                            $email = "No disponible";
+                                        }
+                                        ?>
                                     <span class="dropdown-user-details-name">
                                         <?php echo $nombre . " " . $apellido; ?>
                                     </span><br>
