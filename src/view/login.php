@@ -35,6 +35,8 @@
                                 <div class="card-header justify-content-center">
                                     <h3 class="fw-light my-4">Login</h3>
                                 </div>
+                                <p class="text-center text-muted">Si no cuenta con un usuario, <a
+                                        href="../pages/view/signup.php">Registrate</a>aqui</p>
                                 <div class="card-body">
                                     <!-- Login form-->
                                     <?php
@@ -57,14 +59,21 @@
 
                                         // Verifica si se encontró el usuario
                                         if ($stmt->num_rows == 1) {
+                                            // Vincula los resultados de la consulta
                                             $stmt->bind_result($id, $hashed_password);
                                             $stmt->fetch();
 
                                             // Verificar la contraseña
                                             if (password_verify($password, $hashed_password)) {
                                                 // Iniciar sesión si la contraseña es correcta
-                                                session_start();
+                                                if (session_status() == PHP_SESSION_NONE) {
+                                                    session_start();  // Iniciar sesión solo si no está iniciada
+                                                }
+                                                
+                                                // Guardar el ID del usuario en la sesión
                                                 $_SESSION['user_id'] = $id;
+                                                
+                                                // Redirigir al dashboard
                                                 header("Location: dashboard.php");
                                                 exit;
                                             } else {
