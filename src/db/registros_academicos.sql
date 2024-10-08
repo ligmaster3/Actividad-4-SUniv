@@ -2,6 +2,17 @@
 CREATE DATABASE Registros_academicos;
 USE Registros_academicos;
 
+CREATE TABLE `usuario` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `apellido` varchar(100) NOT NULL,
+  `edad` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
 -- Tabla de estudiantes
 CREATE TABLE Estudiantes (
     id_estudiante INT PRIMARY KEY AUTO_INCREMENT,
