@@ -33,8 +33,8 @@
         </header>
 
         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 container">
-            <div class="panel panel-default">
-                <div class="panel-body">
+            <div class="panel panel-default container-xl">
+                <div class="panel-body card">
                     <h3 class="thin text-center">Registra una nueva cuenta</h3>
                     <p class="text-center text-white">Si ya cuenta con un usuario, presione aqui. <a
                             href="/src/view/login.php">Login</a>.
