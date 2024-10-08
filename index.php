@@ -80,9 +80,9 @@ if (isset($_SESSION['usuario'])) {
                                 </div>
                             </h6>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#!">
-                                <div class="dropdown-item-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            <a class="dropdown-item d-flex pl-1" href="/src/view/perfil.php">
+                                <div class="dropdown-item-icon px-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-settings">
                                         <circle cx="12" cy="12" r="3"></circle>
@@ -91,11 +91,13 @@ if (isset($_SESSION['usuario'])) {
                                         </path>
                                     </svg>
                                 </div>
-                                Account
+                                <p>
+                                    Account
+                                </p>
                             </a>
-                            <a class="dropdown-item" href="#!">
-                                <div class="dropdown-item-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            <a class="dropdown-item d-flex pl-1" href="/src/view/login.php">
+                                <div class="dropdown-item-icon px-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-log-out">
                                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
@@ -103,7 +105,9 @@ if (isset($_SESSION['usuario'])) {
                                         <line x1="21" y1="12" x2="9" y2="12"></line>
                                     </svg>
                                 </div>
-                                Logout
+                                <p>
+                                    Logout
+                                </p>
                             </a>
                         </div>
                     </div>
@@ -113,10 +117,10 @@ if (isset($_SESSION['usuario'])) {
     </header>
 
     <main>
-        <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
-            <div class="lh-1">
-                <h1 class="h6 mb-0 text-white lh-1">¡Hola, <?php echo $nombre; ?> 👋</h1>
-            </div>
+        <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow>
+            <div class=" lh-1">
+            <h1 class="h6 mb-0 text-white lh-1">¡Hola, <?php echo $nombre; ?> 👋</h1>
+        </div>
         </div>
         <div class="container d-flex">
             <div class="p-2">
