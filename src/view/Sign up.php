@@ -8,7 +8,7 @@
 
     <title>Sign up</title>
 
-    <link rel="shortcut icon" href="/assets/img/logo/users-alt(1).png">
+    <link rel="shortcut icon" href="/assets/img/logo/users-alt (1).png">
 
     <link rel="stylesheet" type="text/css" href="/src/public/css/form.css">
 
@@ -70,12 +70,6 @@
                         <hr>
 
                         <div class="row">
-                            <div class="col-lg-8">
-                                <label class="checkbox">
-                                    <input type="checkbox" required>
-                                    Lei los <a href="page_terms.html">Terminos y Condiciones</a>
-                                </label>
-                            </div>
                             <div class="col-lg-4 text-right">
                                 <button class="btn btn-action" type="submit"><a
                                         href="/pages/view/register.php"></a>Registro</button>
