@@ -51,22 +51,38 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios Registrados</title>
+    <link rel="shortcut icon" href="/assets/img/logo/image+base46,fage4.png">
+
     <link rel="stylesheet" type="text/css" href="/src/public/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="/src/public/js/script.js" async></script>
 </head>
 
 <body>
     <header>
         <?php
-session_start();  // Iniciar sesión
 
 if (isset($_SESSION['usuario'])) {
-    echo $_SESSION['usuario']['nombre'] . " " . $_SESSION['usuario']['apellido'];
-    echo $_SESSION['usuario']['email'];
+    $nombre = $_SESSION['usuario']['nombre'];
+    $apellido = $_SESSION['usuario']['apellido'];
+    $email = $_SESSION['usuario']['email'];
 } else {
-    echo "Usuario no identificado";
+    $nombre = "Invitado";
+    $apellido = "";
+    $email = "No disponible";
 }
 ?>
+        ?>
         <nav class="navbar navbar-expand-lg bg-primary-subtle">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Sistema Virtual</a>
