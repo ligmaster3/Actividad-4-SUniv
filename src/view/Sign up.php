@@ -24,6 +24,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <!-- <script src="/src/public/js/script.js" async></script> -->
 
+<body class="bg-primary">
+
     <!-- Article main content -->
     <article class="col-xs-12 maincontent">
         <header class="page-header">
@@ -34,10 +36,10 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h3 class="thin text-center">Registra una nueva cuenta</h3>
-                    <p class="text-center text-muted">Si ya cuenta con un usuario, presione aqui. <a
-                            href="../pages/signin.php">Login</a>.</p>
+                    <p class="text-center text-white">Si ya cuenta con un usuario, presione aqui. <a
+                            href="/src/view/login.php">Login</a>.
+                    </p>
                     <hr>
-
                     <form action="register.php" method="POST">
                         <div class="top-margin">
                             <label>Nombre</label>
@@ -85,6 +87,6 @@
     </div>
     </div>
 
-    </body>
+</body>
 
 </html>
