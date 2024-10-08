@@ -57,3 +57,8 @@
 main .bg-purple{
     background-color: var(--bs-purple);
 }
+
+.form-container {
+    max-width: 600px; /* Ancho máximo del formulario */
+    margin: 0 auto; /* Centrar el formulario */
+}
