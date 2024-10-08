@@ -82,7 +82,7 @@ if (isset($_SESSION['usuario'])) {
     $email = "No disponible";
 }
 ?>
-        ?>
+
         <nav class="navbar navbar-expand-lg bg-primary-subtle">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Sistema Virtual</a>
@@ -161,7 +161,7 @@ if (isset($_SESSION['usuario'])) {
     </header>
 
     <!-- Código para mostrar la lista de usuarios registrados -->
-    <div class="container">
+    <div class="container shadow p-3 mb-5 bg-body-tertiary rounded">
         <h1 class="my-4">Lista de Usuarios Registrados</h1>
 
         <?php if ($result->num_rows > 0): ?>
