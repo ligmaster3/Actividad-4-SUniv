@@ -6,7 +6,7 @@ session_start();
 $server = "localhost";
 $user = "root";
 $password = "";
-$database = "registros_usuarios";
+$database = "registros_academicos";
 
 $conn = new mysqli($server, $user, $password, $database);
 if ($conn->connect_error) {
