@@ -63,6 +63,7 @@ $result = $conn->query($sql);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="/src/public/js/script.js" async></script>
@@ -160,7 +161,14 @@ $result = $conn->query($sql);
 
     <!-- Código para mostrar la lista de usuarios registrados -->
     <div class="container shadow p-3 mb-5 bg-body-tertiary rounded">
-        <h1 class="my-4">Lista de Usuarios Registrados</h1>
+        <div class="d-flex justify-content-between flex-nowrap">
+            <h1 class="my-4">Lista de Usuarios Registrados</h1>
+            <!-- Botón que abre el modal del formulario de registro -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#registroAcademicoModal">
+                Registrar
+            </button>
+        </div>
 
         <?php if ($result->num_rows > 0): ?>
         <table class="table table-striped">
@@ -174,8 +182,8 @@ $result = $conn->query($sql);
             </thead>
             <tbody>
                 <?php
-                    $usuarios = $result->fetch_all(MYSQLI_ASSOC);
-                    foreach ($usuarios as $usuario): ?>
+                $usuarios = $result->fetch_all(MYSQLI_ASSOC);
+                foreach ($usuarios as $usuario): ?>
                 <tr>
                     <td><?php echo htmlspecialchars($usuario['nombre']); ?></td>
                     <td><?php echo htmlspecialchars($usuario['apellido']); ?></td>
@@ -188,8 +196,48 @@ $result = $conn->query($sql);
         <?php else: ?>
         <p>No hay usuarios registrados.</p>
         <?php endif; ?>
-
     </div>
+
+    <!-- Modal del Formulario de Registro Académico -->
+    <div class="modal fade" id="registroAcademicoModal" tabindex="-1" aria-labelledby="registroAcademicoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registroAcademicoLabel">Registro Académico</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulario de Registro Académico -->
+                    <form action="guardar_registro_academico.php" method="POST">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre del Estudiante</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellido" class="form-label">Apellido del Estudiante</label>
+                            <input type="text" class="form-control" id="apellido" name="apellido" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profesor" class="form-label">Nombre del Profesor</label>
+                            <input type="text" class="form-control" id="profesor" name="profesor" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="curso" class="form-label">Nombre del Curso</label>
+                            <input type="text" class="form-control" id="curso" name="curso" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="anio" class="form-label">Año</label>
+                            <input type="number" class="form-control" id="anio" name="anio" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Registro</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 
 </html>
