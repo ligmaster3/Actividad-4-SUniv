@@ -28,16 +28,16 @@
     <header>
         <?php
 
-if (isset($_SESSION['usuario'])) {
-    $nombre = $_SESSION['usuario']['nombre'];
-    $apellido = $_SESSION['usuario']['apellido'];
-    $email = $_SESSION['usuario']['email'];
-} else {
-    $nombre = "Invitado";
-    $apellido = "";
-    $email = "No disponible";
-}
-?>
+        if (isset($_SESSION['usuario'])) {
+            $nombre = $_SESSION['usuario']['nombre'];
+            $apellido = $_SESSION['usuario']['apellido'];
+            $email = $_SESSION['usuario']['email'];
+        } else {
+            $nombre = "Invitado";
+            $apellido = "";
+            $email = "No disponible";
+        }
+        ?>
 
         <nav class="navbar navbar-expand-lg bg-primary-subtle">
             <div class="container-fluid">
