@@ -28,7 +28,7 @@
 
     <!-- Article main content -->
     <article class="col-xs-12 maincontent">
-        <header class="page-header">
+        <header class="page-header  card">
             <h1 class="page-title">Registro</h1>
         </header>
 
@@ -72,9 +72,8 @@
                         <hr>
 
                         <div class="row">
-                            <div class="col-lg-4 text-right">
-                                <button class="btn btn-action" type="submit"><a
-                                        href="/pages/view/register.php"></a>Registro</button>
+                            <div class="d-flex align-items-center justify-content-center mt-4 mb-2 p-3">
+                                <button type="submit" class="btn btn-primary w-50">Login</button>
                             </div>
                         </div>
                     </form>
