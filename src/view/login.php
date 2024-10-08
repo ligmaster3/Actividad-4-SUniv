@@ -20,7 +20,7 @@
     </script>
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="/src/public/js/script.js" async></script>
+    <!-- <script src="/src/public/js/script.js" async></script> -->
 </head>
 
 <body class="bg-primary">
