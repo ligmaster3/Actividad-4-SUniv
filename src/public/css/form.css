@@ -155,7 +155,7 @@ input[type='number'] {
   height: 40px;
 }
 
-.btn {
+.btn, .btn-action{
   height: 40px;
   color: #fff;
   font-size: 1rem;
