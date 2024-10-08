@@ -35,8 +35,8 @@
                                 <div class="card-header justify-content-center">
                                     <h3 class="fw-light my-4">Login</h3>
                                 </div>
-                                <p class="text-center text-muted">Si no cuenta con un usuario, <a
-                                        href="../pages/view/signup.php">Registrate</a>aqui</p>
+                                <p class="text-center text-white">Si no cuenta con un usuario, <a
+                                        href="/src/view/Sign up.php">Registrate</a>aqui</p>
                                 <div class="card-body">
                                     <!-- Login form-->
                                     <?php
