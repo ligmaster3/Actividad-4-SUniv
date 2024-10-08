@@ -152,7 +152,7 @@ if (isset($_SESSION['usuario'])) {
                         <h6 class="card-subtitle mb-2 text-body-secondary">Codigo de la materia</h6>
                     </div>
                 </div>
-            </div> .
+            </div>
 
 
         </div>
