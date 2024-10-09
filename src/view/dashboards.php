@@ -41,11 +41,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->close();
 }
 
-$conn->close();
 
-// Mostrar los registros de la tabla "usuario"
-$sql = "SELECT user_id, user_name, last_user, edad_user, email_user FROM estudiantes";
-$result = $conn->query($sql);
+
+// Mostrar los registros de la tabla "estudiante"
+$sql = "SELECT 
+    CONCAT(E.nombre, ' ', E.apellido) AS Usuario,
+    E.correo AS Email,
+    E.carrera AS Carrera,
+    P.nombre AS Profesor,
+    I.anio_curso AS Año,
+    I.fecha_inscripcion AS `Fecha de Inscripción`
+    FROM 
+        Estudiantes E
+    JOIN 
+        Inscripciones I ON E.id_estudiante = I.id_estudiante
+    JOIN 
+        Cursos C ON I.id_curso = C.id_curso
+    JOIN 
+        Profesores P ON C.id_profesor = P.id_profesor";
+
+    $result = $conn->query($sql);
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -74,6 +92,7 @@ $result = $conn->query($sql);
 </head>
 
 <body>
+
     <header>
         <?php
 
@@ -128,10 +147,10 @@ $result = $conn->query($sql);
                                     src="/assets/img/logo/profile-1.png" alt="User Avatar">
                                 <div>
                                     <span class="dropdown-user-details-name">
-                                        <?php echo $nombre . " " . $apellido; ?>
+                                        <?php echo $row['nombre'] . " " . $row['apellido']; ?>
                                     </span><br>
                                     <span class="dropdown-user-details-email">
-                                        <?php echo $email; ?>
+                                        <?php echo $row['correo']; ?>
                                     </span>
                                 </div>
                             </h6>
@@ -190,35 +209,31 @@ $result = $conn->query($sql);
                 <tr>
                     <th>Usuario</th>
                     <th>Email</th>
-                    <th>Año</th>
                     <th>Carrera</th>
-                    <th>Acciones</th>
+                    <th>Profesor</th>
+                    <th>Año</th>
+                    <th>Fecha de Inscripción</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                    $usuarios = $result->fetch_all(MYSQLI_ASSOC);
-                    foreach ($usuarios as $usuario): ?>
+            $usuarios = $result->fetch_all(MYSQLI_ASSOC);
+            foreach ($usuarios as $usuario): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($usuario['nombre'] . " " . $usuario['apellido']); ?></td>
-                    <td><?php echo htmlspecialchars($usuario['email']); ?></td>
-                    <td><?php echo htmlspecialchars($usuario['anio']); ?></td>
-                    <td><?php echo htmlspecialchars($usuario['carrera']); ?></td>
-                    <td>
-                        <!-- <a href="editar_usuario.php?id=<?php echo $usuario['id']; ?>" class="btn btn-sm btn-warning">
-                            <i class="fas fa-edit"></i>
-                        </a> -->
-                        <!-- <a href="eliminar_usuario.php?id=<?php echo $usuario['id']; ?>" class="btn btn-sm btn-danger">
-                            <i class="fas fa-trash"></i>
-                        </a> -->
-                    </td>
+                    <td><?php echo htmlspecialchars($usuario['Usuario']); ?></td>
+                    <td><?php echo htmlspecialchars($usuario['Email']); ?></td>
+                    <td><?php echo htmlspecialchars($usuario['Carrera']); ?></td>
+                    <td><?php echo htmlspecialchars($usuario['Profesor']); ?></td>
+                    <td><?php echo htmlspecialchars($usuario['Año']); ?></td>
+                    <td><?php echo htmlspecialchars($usuario['Fecha de Inscripción']); ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
         <?php else: ?>
-        <p>No hay usuarios registrados.</p>
+        <p>No se encontraron registros.</p>
         <?php endif; ?>
+
     </div>
 
     <!-- Modal del Formulario de Registro Académico -->
@@ -246,7 +261,7 @@ $result = $conn->query($sql);
                             <input type="text" class="form-control" id="profesor" name="profesor" required>
                         </div>
                         <div class="mb-3">
-                            <label for="curso" class="form-label">Nombre del Curso</label>
+                            <label for="curso" class="form-label">Nombre del carrera</label>
                             <input type="text" class="form-control" id="curso" name="curso" required>
                         </div>
                         <div class="mb-3">
