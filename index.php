@@ -17,64 +17,63 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="/src/public/js/script.js" async></script>
 </head>
-
 <?php
-session_start();  // Inicia la sesión
+session_start();
 
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "registros_academicos";
 
-// Conexión con la base de datos
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verifica si hay error de conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-
-// Consulta para verificar si el usuario está registrado
-$sql_user = "SELECT user_name, last_user, email_user FROM usuario "; // Ajusta el email según tu lógica
-$result = $conn->query($sql_user);
-
-// Verifica si el usuario existe
-if ($result->num_rows > 0) {
-    $usuario = $result->fetch_assoc();
-    $_SESSION['usuario'] = [
-        'nombre' => $usuario['user_name'],
-        'apellido' => $usuario['last_user'],
-        'email' => $usuario['email_user']
-    ];
-
-    $nombre = $_SESSION['usuario']['nombre'];
-    $apellido = $_SESSION['usuario']['apellido'];
-    $email = $_SESSION['usuario']['email'];
-
+// Función para mostrar notificaciones
+function showNotification($message, $type) {
     echo "<script>Toastify({
-        text: 'Usuario encontrado con éxito',
+        text: '$message',
         duration: 3000,
         gravity: 'top',
         position: 'right',
-        backgroundColor: '#28a745',
+        backgroundColor: '$type',
     }).showToast();</script>";
+}
 
+// Verificar si el usuario está logueado
+if (isset($_SESSION['user_id'])) {
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    $user_id = $_SESSION['user_id'];
+    $sql = "SELECT user_name, last_user, email_user FROM usuario WHERE user_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $usuario = $result->fetch_assoc();
+        $nombre = $usuario['user_name'];
+        $apellido = $usuario['last_user'];
+        $email = $usuario['email_user'];
+        showNotification('Usuario autenticado', '#28a745');
+    } else {
+        // Esto no debería ocurrir normalmente, pero por si acaso
+        session_destroy();
+        header("Location: /src/view/login.php");
+        exit();
+    }
+
+    $stmt->close();
+    $conn->close();
 } else {
-    // Usuario no encontrado, asigna datos de invitado
+    // Usuario no logueado
     $nombre = "Invitado";
     $apellido = "";
     $email = "No disponible";
-
-    echo "<script>Toastify({
-        text: 'Usuario invitado',
-        duration: 3000,
-        gravity: 'top',
-        position: 'right',
-        backgroundColor: '#ffc107',
-    }).showToast();</script>";
+    showNotification('Usuario invitado', '#ffc107');
+    echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">Usuario No Registrado</div>';
 }
-
-$conn->close();
 ?>
 
 
@@ -113,24 +112,20 @@ $conn->close();
                                 <img class="rounded-circle me-3" style="width: 50px; height: 50px;"
                                     src="/assets/img/logo/profile-1.png" alt="User Avatar">
                                 <div>
-                                    <span class="dropdown-user-details-name">
-                                        <?php echo $nombre . " " . $apellido; ?>
-                                    </span><br>
-                                    <span class="dropdown-user-details-email">
-                                        <?php echo $email; ?>
-                                    </span>
+                                    <span
+                                        class="dropdown-user-details-name"><?php echo $nombre . " " . $apellido; ?></span><br>
+                                    <span class="dropdown-user-details-email"><?php echo $email; ?></span>
                                 </div>
                             </h6>
                             <div class="dropdown-divider"></div>
+                            <?php if (isset($_SESSION['user_id'])): ?>
+
                             <a class="dropdown-item d-flex pl-1" href="/src/view/perfil.php">
                                 <div class="dropdown-item-icon px-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-settings">
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                        <path
-                                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-                                        </path>
+                                        stroke-linejoin="round" class="feather feather-log-out">
+                                        <path d="M16 17l5-5-5-5m6 5H3"></path>
                                     </svg>
                                 </div>
                                 <p>
@@ -149,6 +144,19 @@ $conn->close();
                                     Logout
                                 </p>
                             </a>
+                            <?php else: ?>
+                            <a class="dropdown-item d-flex pl-1" href="/src/view/login.php">
+                                <!-- ... (puedes agregar un ícono de Login) ... -->
+                                <div class="dropdown-item-icon px-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-log-out">
+                                        <path d="M16 17l5-5-5-5m6 5H3"></path>
+                                    </svg>
+                                </div>
+                                <p>Login</p>
+                            </a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -159,18 +167,16 @@ $conn->close();
 
     <main>
         <section>
-            <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow>
-            <div class=" lh-1">
-                <h1 class="h6 mb-0 text-white lh-1">¡Hola, <?php echo $nombre; ?> 👋</h1>
+            <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow">
+                <div class="lh-1">
+                    <h1 class="h6 mb-0 text-white lh-1">¡Hola, <?php echo $nombre; ?> 👋</h1>
+                </div>
             </div>
         </section>
         <section id="">
-
+            <!-- Contenido principal -->
         </section>
-
     </main>
-
-
 </body>
 
 </html>
