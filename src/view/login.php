@@ -48,7 +48,7 @@
                                         $database = "registros_academicos";// Incluye la conexión a la base de datos
 
                                         $email = $_POST['email_user'];
-                                        $password = $_POST['password'];
+                                        $password = $_POST['password_user'];
 
                                         // Consulta para verificar el correo y obtener la contraseña encriptada
                                         $sql = "SELECT id, password FROM usuario WHERE email_user = ?";
