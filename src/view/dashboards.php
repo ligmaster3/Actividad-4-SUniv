@@ -6,7 +6,7 @@ session_start();
 $server = "localhost";
 $user = "root";
 $password = "";
-$database = "registros_academicos";
+$database = "registros_academicos"; // Nombre de tu base de datos
 
 $conn = new mysqli($server, $user, $password, $database);
 if ($conn->connect_error) {
@@ -19,10 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $apellido = $_POST['last_user'];
     $edad = $_POST['edad_user'];
     $correo = $_POST['email_user'];
-    $contrasena = $_POST['password_user'];
+    $contrasena = $_POST['password'];
 
     // Consulta preparada para evitar SQL injection
-    $stmt = $conn->prepare("INSERT INTO usuario (user_name, last_user, edad, email_user, password) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO usuario (user_name, last_user, edad_user, email_user, password_user) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("ssiss", $nombre, $apellido, $edad, $correo, $contrasena);
 
     if ($stmt->execute()) {
@@ -33,14 +33,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'email' => $correo
         ];
         echo '<div class="alert alert-success">Registro exitoso</div>';
+        header("Location: dashboards.php"); // Redirigir a la página del dashboard
     } else {
-        echo "<div class='alert alert-danger'>Error: " . $stmt->error . "</div>";
+        echo "<div class='alert alert-danger'>Error en el registro: " . $stmt->error . "</div>";
     }
+
     $stmt->close();
 }
 
+$conn->close();
+
 // Mostrar los registros de la tabla "usuario"
-$sql = "SELECT user_id, user_name, last_user, edad_user, email_user FROM usuario";
+$sql = "SELECT user_id, user_name, last_user, edad_user, email_user FROM estudiantes";
 $result = $conn->query($sql);
 ?>
 
@@ -71,9 +75,22 @@ $result = $conn->query($sql);
 
 <body>
     <header>
+        <?php
+
+        if (isset($_SESSION['usuario'])) {
+            $nombre = $_SESSION['usuario']['nombre'];
+            $apellido = $_SESSION['usuario']['apellido'];
+            $email = $_SESSION['usuario']['email'];
+        } else {
+            $nombre = "Invitado";
+            $apellido = "";
+            $email = "No disponible";
+        }
+        ?>
+
         <nav class="navbar navbar-expand-lg bg-primary-subtle">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Sistema Virtual</a>
+                <a class="navbar-brand" href="#">Sistema Academico</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                     aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -83,11 +100,18 @@ $result = $conn->query($sql);
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Mis Cursos</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Cursos
+                            </a>
+                            <hr class="dropdown-divider">
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Creditos</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Trabajos</a>
+                            <a class="nav-link" href="#">Pricing</a>
                         </li>
                     </ul>
 
@@ -103,17 +127,6 @@ $result = $conn->query($sql);
                                 <img class="rounded-circle me-3" style="width: 50px; height: 50px;"
                                     src="/assets/img/logo/profile-1.png" alt="User Avatar">
                                 <div>
-                                    <?php
-                                        if (isset($_SESSION['usuario'])) {
-                                            $nombre = $_SESSION['usuario']['nombre'];
-                                            $apellido = $_SESSION['usuario']['apellido'];
-                                            $email = $_SESSION['usuario']['email'];
-                                        } else {
-                                            $nombre = "Invitado";
-                                            $apellido = "";
-                                            $email = "No disponible";
-                                        }
-                                        ?>
                                     <span class="dropdown-user-details-name">
                                         <?php echo $nombre . " " . $apellido; ?>
                                     </span><br>
@@ -123,7 +136,7 @@ $result = $conn->query($sql);
                                 </div>
                             </h6>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item d-flex pl-1" href="#!">
+                            <a class="dropdown-item d-flex pl-1" href="/src/view/perfil.php">
                                 <div class="dropdown-item-icon px-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -138,7 +151,7 @@ $result = $conn->query($sql);
                                     Account
                                 </p>
                             </a>
-                            <a class="dropdown-item d-flex pl-1" href="#!">
+                            <a class="dropdown-item d-flex pl-1" href="/src/view/login.php">
                                 <div class="dropdown-item-icon px-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
