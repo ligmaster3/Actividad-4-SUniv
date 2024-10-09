@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre = $_POST['user_name'];
     $apellido = $_POST['last_user'];
-    $edad = $_POST['edad_seru'];
+    $edad = $_POST['edad_user'];
     $correo = $_POST['email_user'];
     $contrasena = $_POST['password_user'];
 
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Mostrar los registros de la tabla "usuario"
-$sql = "SELECT id, nombre, apellido, edad, email FROM usuario";
+$sql = "SELECT user_id, user_name, last_user, edad_user, email_user FROM usuario";
 $result = $conn->query($sql);
 ?>
 
