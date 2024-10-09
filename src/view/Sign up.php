@@ -43,19 +43,19 @@
                     <form action="/src/view/dashboards.php" method="POST">
                         <div class="top-margin">
                             <label>Nombre</label>
-                            <input type="text" name="nombre" class="form-control" required>
+                            <input type="text" name="user_name" class="form-control" required>
                         </div>
                         <div class="top-margin">
                             <label>Apellido</label>
-                            <input type="text" name="apellido" class="form-control" required>
+                            <input type="text" name="last_user" class="form-control" required>
                         </div>
                         <div class="top-margin">
                             <label>Edad</label>
-                            <input type="text" name="edad" class="form-control" required>
+                            <input type="text" name="edad_user" class="form-control" required>
                         </div>
                         <div class="top-margin">
                             <label>Correo <span class="text-danger">*</span></label>
-                            <input type="email" name="correo" class="form-control" required>
+                            <input type="email" name="email_user" class="form-control" required>
                         </div>
 
                         <div class="row top-margin">
