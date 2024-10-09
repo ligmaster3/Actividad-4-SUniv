@@ -27,17 +27,18 @@
 <body>
     <header>
         <?php
+    session_start(); // Asegúrate de que la sesión esté iniciada
 
-        if (isset($_SESSION['usuario'])) {
-            $nombre = $_SESSION['usuario']['nombre'];
-            $apellido = $_SESSION['usuario']['apellido'];
-            $email = $_SESSION['usuario']['email'];
-        } else {
-            $nombre = "Invitado";
-            $apellido = "";
-            $email = "No disponible";
-        }
-        ?>
+    if (isset($_SESSION['usuario'])) {
+        $nombre = $_SESSION['nombre'];
+        $apellido = $_SESSION['apellido'];
+        $email = $_SESSION['usuario']['email'];
+    } else {
+        $nombre = "Invitado";
+        $apellido = "";
+        $email = "No disponible";
+    }
+    ?>
 
         <nav class="navbar navbar-expand-lg bg-primary-subtle">
             <div class="container-fluid">
@@ -107,9 +108,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-log-out">
-                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                                        <polyline points="16 17 21 12 16 7"></polyline>
-                                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                                        <path d="M16 17l5-5-5-5m6 5H3"></path>
                                     </svg>
                                 </div>
                                 <p>
@@ -122,6 +121,7 @@
             </div>
         </nav>
     </header>
+
 
     <main>
         <section>
