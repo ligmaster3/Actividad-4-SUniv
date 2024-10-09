@@ -15,14 +15,14 @@ if ($conn->connect_error) {
 
 // Verificar si se ha enviado el formulario
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $edad = $_POST['edad'];
-    $correo = $_POST['correo'];
-    $contrasena = $_POST['contrasena'];
+    $nombre = $_POST['user_name'];
+    $apellido = $_POST['last_user'];
+    $edad = $_POST['edad_seru'];
+    $correo = $_POST['email_user'];
+    $contrasena = $_POST['password_user'];
 
     // Consulta preparada para evitar SQL injection
-    $stmt = $conn->prepare("INSERT INTO usuario (nombre, apellido, edad, email, password) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO usuario (user_name, last_user, edad, email_user, password) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("ssiss", $nombre, $apellido, $edad, $correo, $contrasena);
 
     if ($stmt->execute()) {
@@ -66,7 +66,7 @@ $result = $conn->query($sql);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="/src/public/js/script.js" async></script>
+    <!-- <script src="/src/public/js/script.js" async></script> -->
 </head>
 
 <body>
@@ -192,12 +192,12 @@ $result = $conn->query($sql);
                     <td><?php echo htmlspecialchars($usuario['anio']); ?></td>
                     <td><?php echo htmlspecialchars($usuario['carrera']); ?></td>
                     <td>
-                        <a href="editar_usuario.php?id=<?php echo $usuario['id']; ?>" class="btn btn-sm btn-warning">
+                        <!-- <a href="editar_usuario.php?id=<?php echo $usuario['id']; ?>" class="btn btn-sm btn-warning">
                             <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="eliminar_usuario.php?id=<?php echo $usuario['id']; ?>" class="btn btn-sm btn-danger">
+                        </a> -->
+                        <!-- <a href="eliminar_usuario.php?id=<?php echo $usuario['id']; ?>" class="btn btn-sm btn-danger">
                             <i class="fas fa-trash"></i>
-                        </a>
+                        </a> -->
                     </td>
                 </tr>
                 <?php endforeach; ?>
