@@ -51,8 +51,15 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Cursos
+                            </a>
+                            <hr class="dropdown-divider">
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Creditos</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Pricing</a>
@@ -117,45 +124,16 @@
     </header>
 
     <main>
-        <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow>
+        <section>
+            <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow>
             <div class=" lh-1">
-            <h1 class="h6 mb-0 text-white lh-1">¡Hola, <?php echo $nombre; ?> 👋</h1>
-        </div>
-        </div>
-        <div class="container d-flex">
-            <div class="p-2">
-                <div class="card" style="width: 18rem;">
-                    <img src="https://intecssa.com/wp-content/uploads/2023/04/%C2%BFQue-se-protege-en-seguridad-informatica.jpg"
-                        class="card-img-top" alt="Materia">
-                    <div class="card-body">
-                        <a href="#" class="card-link">Materia 1</a>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Codigo de la materia</h6>
-                    </div>
-                </div>
-            </div> .
-            <div class="p-2">
-                <div class="card " style="width: 18rem;">
-                    <img src="https://intecssa.com/wp-content/uploads/2023/04/%C2%BFQue-se-protege-en-seguridad-informatica.jpg"
-                        class="card-img-top" alt="Materia">
-                    <div class="card-body">
-                        <a href="#" class="card-link">Materia 1</a>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Codigo de la materia</h6>
-                    </div>
-                </div>
-            </div> .
-            <div class="p-2">
-                <div class=" card " style=" width: 18rem;">
-                    <img src="https://intecssa.com/wp-content/uploads/2023/04/%C2%BFQue-se-protege-en-seguridad-informatica.jpg"
-                        class="card-img-top" alt="Materia">
-                    <div class="card-body">
-                        <a href="#" class="card-link">Materia 1</a>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Codigo de la materia</h6>
-                    </div>
-                </div>
+                <h1 class="h6 mb-0 text-white lh-1">¡Hola, <?php echo $nombre; ?> 👋</h1>
             </div>
+        </section>
+        <section id="">
 
+        </section>
 
-        </div>
     </main>
 
 
