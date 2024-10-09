@@ -3,12 +3,12 @@ CREATE DATABASE Registros_academicos;
 USE Registros_academicos;
 
 CREATE TABLE `usuario` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `apellido` varchar(100) NOT NULL,
-  `edad` varchar(255) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `user_id` int(11) PRIMARY KEY AUTO_INCREMENT,
+  `user_name` varchar(100) NOT NULL,
+  `last_user` varchar(100) NOT NULL,
+  `edad_user` varchar(255) NOT NULL,
+  `email_user` varchar(100) NOT NULL,
+  `password_user` varchar(255) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
