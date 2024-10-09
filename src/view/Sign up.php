@@ -40,7 +40,7 @@
                             href="/src/view/login.php">Login</a>.
                     </p>
                     <hr>
-                    <form action="register.php" method="POST">
+                    <form action="/src/view/dashboards.php" method="POST">
                         <div class="top-margin">
                             <label>Nombre</label>
                             <input type="text" name="nombre" class="form-control" required>
@@ -51,7 +51,7 @@
                         </div>
                         <div class="top-margin">
                             <label>Edad</label>
-                            <input type="text" name="apellido" class="form-control" required>
+                            <input type="text" name="edad" class="form-control" required>
                         </div>
                         <div class="top-margin">
                             <label>Correo <span class="text-danger">*</span></label>
@@ -73,7 +73,7 @@
 
                         <div class="row">
                             <div class="d-flex align-items-center justify-content-center mt-4 mb-2 p-3">
-                                <button type="submit" class="btn btn-primary w-50">Login</button>
+                                <button type="submit" class="btn btn-primary w-50">Registrar</button>
                             </div>
                         </div>
                     </form>
