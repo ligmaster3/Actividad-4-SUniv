@@ -66,6 +66,59 @@ CREATE TABLE Evaluaciones (
     FOREIGN KEY (id_estudiante) REFERENCES Estudiantes(id_estudiante) ON DELETE CASCADE
 );
 
+INSERT INTO usuario (user_name, last_user, edad_user, email_user, password_user) VALUES
+('Juan', 'Pérez', '25', 'juan.perez@example.com', 'password123'),
+('Ana', 'Gómez', '30', 'ana.gomez@example.com', 'password456'),
+('Luis', 'Martínez', '22', 'luis.martinez@example.com', 'password789'),
+('María', 'López', '28', 'maria.lopez@example.com', 'password321'),
+('Carlos', 'Hernández', '35', 'carlos.hernandez@example.com', 'password654'),
+('Sofía', 'Ramírez', '27', 'sofia.ramirez@example.com', 'password987'),
+('Javier', 'Torres', '29', 'javier.torres@example.com', 'password159');
+
+INSERT INTO Estudiantes (nombre, apellido, fecha_nacimiento, correo, carrera) VALUES
+('Pedro', 'Sánchez', '2000-05-15', 'pedro.sanchez@example.com', 'Ingeniería'),
+('Lucía', 'Fernández', '1999-08-20', 'lucia.fernandez@example.com', 'Medicina'),
+('Andrés', 'García', '2001-03-10', 'andres.garcia@example.com', 'Arquitectura'),
+('Claudia', 'Mora', '1998-12-30', 'claudia.mora@example.com', 'Derecho'),
+('Miguel', 'Salazar', '2002-07-25', 'miguel.salazar@example.com', 'Biología'),
+('Elena', 'Cruz', '1997-11-05', 'elena.cruz@example.com', 'Química'),
+('Diego', 'Reyes', '2000-04-18', 'diego.reyes@example.com', 'Física');
+
+INSERT INTO Profesores (nombre, apellido, correo) VALUES
+('Roberto', 'Díaz', 'roberto.diaz@example.com'),
+('Patricia', 'Méndez', 'patricia.mendez@example.com'),
+('Fernando', 'Vargas', 'fernando.vargas@example.com'),
+('Laura', 'Paredes', 'laura.paredes@example.com'),
+('Julio', 'Caldos', 'julio.caldos@example.com'),
+('Verónica', 'Ríos', 'veronica.rios@example.com'),
+('Sergio', 'Núñez', 'sergio.nunez@example.com');
+
+INSERT INTO Cursos (nombre_curso, descripcion, codigo_curso, id_profesor) VALUES
+('Matemáticas', 'Curso de matemáticas básicas.', 'MAT101', 1),
+('Biología', 'Introducción a la biología.', 'BIO101', 2),
+('Física', 'Fundamentos de la física.', 'FIS101', 3),
+('Química', 'Curso de química general.', 'QUI101', 4),
+('Historia', 'Historia universal.', 'HIS101', 5),
+('Literatura', 'Análisis de obras literarias.', 'LIT101', 6),
+('Programación', 'Introducción a la programación.', 'PROG101', 7);
+
+INSERT INTO Inscripciones (id_estudiante, id_curso, anio_curso, fecha_inscripcion) VALUES
+(1, 1, 2023, '2023-09-01'),
+(2, 2, 2023, '2023-09-02'),
+(3, 3, 2023, '2023-09-03'),
+(4, 4, 2023, '2023-09-04'),
+(5, 5, 2023, '2023-09-05'),
+(6, 6, 2023, '2023-09-06'),
+(7, 7, 2023, '2023-09-07');
+
+INSERT INTO Evaluaciones (tipo_evaluacion, descripcion, fecha, id_curso, id_estudiante, nota, anio_evaluacion) VALUES
+('Examen', 'Examen final de Matemáticas.', '2023-12-15', 1, 1, 85.50, 2023),
+('Trabajo', 'Trabajo práctico de Biología.', '2023-12-20', 2, 2, 90.00, 2023),
+('Examen', 'Examen de Física.', '2023-12-25', 3, 3, 78.00, 2023),
+('Trabajo', 'Trabajo de Química.', '2023-12-30', 4, 4, 88.00, 2023),
+('Examen', 'Evaluación de Historia.', '2023-12-10', 5, 5, 92.00, 2023),
+('Trabajo', 'Análisis literario.', '2023-12-05', 6, 6, 95.00, 2023),
+('Examen', 'Prueba de Programación.', '2023-12-01', 7, 7, 80.00, 2023);
 
 
 DELIMITER //
