@@ -257,12 +257,12 @@ $sql = "SELECT
                             <input type="text" class="form-control" id="apellido" name="apellido" required>
                         </div>
                         <div class="mb-3">
-                            <label for="profesor" class="form-label">Nombre del Profesor</label>
-                            <input type="text" class="form-control" id="profesor" name="profesor" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="curso" class="form-label">Nombre del carrera</label>
                             <input type="text" class="form-control" id="curso" name="curso" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profesor" class="form-label">Nombre del Profesor</label>
+                            <input type="text" class="form-control" id="profesor" name="profesor" required>
                         </div>
                         <div class="mb-3">
                             <label for="anio" class="form-label">Año</label>
