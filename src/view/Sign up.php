@@ -61,7 +61,7 @@
                         <div class="row top-margin">
                             <div class="col-sm-6">
                                 <label>Contraseña <span class="text-danger">*</span></label>
-                                <input type="password" name="contrasena" class="form-control" required>
+                                <input type="password" name="password" class="form-control" required>
                             </div>
                             <div class="col-sm-6">
                                 <label>Confirmar Contraseña <span class="text-danger">*</span></label>
