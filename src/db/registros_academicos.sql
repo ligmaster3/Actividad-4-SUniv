@@ -20,7 +20,7 @@ CREATE TABLE Estudiantes (
     apellido VARCHAR(100),
     fecha_nacimiento DATE,
     correo VARCHAR(100),
-    matricula VARCHAR(20) -- Identificación única del estudiante
+    carrera VARCHAR(20) -- carrera única del estudiante
 );
 
 -- Tabla de profesores
@@ -75,7 +75,7 @@ CREATE PROCEDURE InsertarDatosCompletos(
     IN p_apellido_estudiante VARCHAR(100),
     IN p_fecha_nacimiento DATE,
     IN p_correo_estudiante VARCHAR(100),
-    IN p_matricula VARCHAR(20),
+    IN p_carrera VARCHAR(20),
     IN p_nombre_profesor VARCHAR(100),
     IN p_apellido_profesor VARCHAR(100),
     IN p_correo_profesor VARCHAR(100),
@@ -100,8 +100,8 @@ BEGIN
     START TRANSACTION;
 
     -- Insertar el estudiante
-    INSERT INTO Estudiantes (nombre, apellido, fecha_nacimiento, correo, matricula)
-    VALUES (p_nombre_estudiante, p_apellido_estudiante, p_fecha_nacimiento, p_correo_estudiante, p_matricula);
+    INSERT INTO Estudiantes (nombre, apellido, fecha_nacimiento, correo,carrera)
+    VALUES (p_nombre_estudiante, p_apellido_estudiante, p_fecha_nacimiento, p_correo_estudiante, p_carrera);
     
     -- Insertar el profesor
     INSERT INTO Profesores (nombre, apellido, correo)
