@@ -40,18 +40,28 @@
                                 <div class="card-body">
                                     <!-- Login form-->
                                     <?php
+                                    session_start();  // Inicia la sesión si no se ha iniciado ya
+
                                     // Verificar si el formulario ha sido enviado
                                     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         $server = "localhost";
                                         $user = "root";
                                         $password = "";
-                                        $database = "registros_academicos";// Incluye la conexión a la base de datos
+                                        $database = "registros_academicos";
+
+                                        // Conexión a la base de datos
+                                        $conn = new mysqli($server, $user, $password, $database);
+
+                                        // Verificar conexión
+                                        if ($conn->connect_error) {
+                                            die("Conexión fallida: " . $conn->connect_error);
+                                        }
 
                                         $email = $_POST['email'];
                                         $password = $_POST['password'];
 
-                                        // Consulta para verificar el correo y obtener la contraseña encriptada
-                                        $sql = "SELECT id, password FROM usuario WHERE email = ?";
+                                        // Consulta para verificar el correo y obtener la contraseña encriptada y otros datos
+                                        $sql = "SELECT id, user_name, last_user, password FROM usuario WHERE email_user = ?";
                                         $stmt = $conn->prepare($sql);
                                         $stmt->bind_param("s", $email);
                                         $stmt->execute();
@@ -60,25 +70,19 @@
                                         // Verifica si se encontró el usuario
                                         if ($stmt->num_rows == 1) {
                                             // Vincula los resultados de la consulta
-                                            $stmt->bind_result($id, $hashed_password);
+                                            $stmt->bind_result($id, $nombre, $apellido, $hashed_password);
                                             $stmt->fetch();
 
-                                            // Al verificar la contraseña y antes de redirigir
-                                    if (password_verify($password, $hashed_password)) {
-                                        if (session_status() == PHP_SESSION_NONE) {
-                                            session_start();  // Iniciar sesión solo si no está iniciada
-                                        }
+                                            // Verifica si la contraseña es correcta
+                                            if (password_verify($password, $hashed_password)) {
+                                                // Guardar los datos del usuario en la sesión
+                                                $_SESSION['user_id'] = $id;
+                                                $_SESSION['nombre'] = $nombre;
+                                                $_SESSION['apellido'] = $apellido;
 
-                                        // Guardar los datos del usuario en la sesión
-                                        $_SESSION['user_id'] = $id;
-                                        $_SESSION['nombre'] = $nombre; // Asegúrate de que $nombre esté definido
-                                        $_SESSION['apellido'] = $apellido; // Asegúrate de que $apellido esté definido
-
-                                        // Redirigir al dashboard
-                                        header("Location: index.php");
-                                        exit;
-                                    }
-
+                                                // Redirigir al index (dashboard)
+                                                header("Location: index.php");
+                                                exit;
                                             } else {
                                                 echo "<div class='alert alert-danger'>Contraseña incorrecta.</div>";
                                             }
@@ -86,8 +90,12 @@
                                             echo "<div class='alert alert-danger'>No se encontró el usuario.</div>";
                                         }
 
+                                        // Cerrar declaración y conexión
                                         $stmt->close();
+                                        $conn->close();
+                                    }
                                     ?>
+
                                     <form method="POST" action="">
                                         <!-- Form Group (email address)-->
                                         <div class="mb-3">
