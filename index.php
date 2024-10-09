@@ -1,50 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Unachi/Sistema Universitario</title>
 
     <link rel="shortcut icon" href="/assets/img/logo/image+base46,fage4.png">
-
-    <link rel="stylesheet" type="text/css" href="/src/public/css/style.css">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/src/public/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="/src/public/js/script.js" async></script>
 </head>
 
+<?php
+session_start();  // Inicia la sesión
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "registros_academicos";
+
+// Conexión con la base de datos
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verifica si hay error de conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Consulta para verificar si el usuario está registrado
+$sql_user = "SELECT user_name, last_user, email_user FROM usuario "; // Ajusta el email según tu lógica
+$result = $conn->query($sql_user);
+
+// Verifica si el usuario existe
+if ($result->num_rows > 0) {
+    $usuario = $result->fetch_assoc();
+    $_SESSION['usuario'] = [
+        'nombre' => $usuario['user_name'],
+        'apellido' => $usuario['last_user'],
+        'email' => $usuario['email_user']
+    ];
+
+    $nombre = $_SESSION['usuario']['nombre'];
+    $apellido = $_SESSION['usuario']['apellido'];
+    $email = $_SESSION['usuario']['email'];
+
+    echo "<script>Toastify({
+        text: 'Usuario encontrado con éxito',
+        duration: 3000,
+        gravity: 'top',
+        position: 'right',
+        backgroundColor: '#28a745',
+    }).showToast();</script>";
+
+} else {
+    // Usuario no encontrado, asigna datos de invitado
+    $nombre = "Invitado";
+    $apellido = "";
+    $email = "No disponible";
+
+    echo "<script>Toastify({
+        text: 'Usuario invitado',
+        duration: 3000,
+        gravity: 'top',
+        position: 'right',
+        backgroundColor: '#ffc107',
+    }).showToast();</script>";
+}
+
+$conn->close();
+?>
+
+
 <body>
     <header>
-        <?php
-    session_start(); // Asegúrate de que la sesión esté iniciada
-
-    if (isset($_SESSION['usuario'])) {
-        $nombre = $_SESSION['nombre'];
-        $apellido = $_SESSION['apellido'];
-        $email = $_SESSION['usuario']['email'];
-    } else {
-        $nombre = "Invitado";
-        $apellido = "";
-        $email = "No disponible";
-    }
-    ?>
-
         <nav class="navbar navbar-expand-lg bg-primary-subtle">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Sistema Academico</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarText">
@@ -53,24 +92,19 @@
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 Cursos
                             </a>
-                            <hr class="dropdown-divider">
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Creditos</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
-                        </li>
                     </ul>
 
-                    <!-- Avatar -->
+                    <!-- Avatar y detalles de usuario -->
                     <div class="nav-item dropdown">
                         <a class="btn btn-icon dropdown-toggle" id="navbarDropdownUserImage" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                            data-bs-toggle="dropdown">
                             <img class="rounded-circle" style="width: 40px; height: 40px;"
                                 src="/assets/img/logo/profile-1.png" alt="User Avatar">
                         </a>
