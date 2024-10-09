@@ -61,8 +61,14 @@
                                         $password = $_POST['password'];
 
                                         // Consulta para verificar el correo y obtener la contraseña encriptada y otros datos
-                                        $sql = "SELECT id, user_name, last_user, password FROM usuario WHERE email_user = ?";
+                                        $sql = "SELECT user_id, user_name, last_user, password_user FROM usuario WHERE email_user = ?";
                                         $stmt = $conn->prepare($sql);
+
+                                        // Verificar si la preparación de la consulta fue exitosa
+                                        if ($stmt === false) {
+                                            die("Error al preparar la consulta: " . $conn->error);
+                                        }
+                                    
                                         $stmt->bind_param("s", $email);
                                         $stmt->execute();
                                         $stmt->store_result();
@@ -80,8 +86,8 @@
                                                 $_SESSION['nombre'] = $nombre;
                                                 $_SESSION['apellido'] = $apellido;
 
-                                                // Redirigir al index (dashboard)
-                                                header("Location: index.php");
+                                                // Redirigir al index (index)
+                                                header("Location: /index.php");
                                                 exit;
                                             } else {
                                                 echo "<div class='alert alert-danger'>Contraseña incorrecta.</div>";
