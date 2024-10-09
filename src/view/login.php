@@ -64,20 +64,20 @@
                                             $stmt->fetch();
 
                                             // Al verificar la contraseña y antes de redirigir
-                                            if (password_verify($password, $hashed_password)) {
-                                                if (session_status() == PHP_SESSION_NONE) {
-                                                    session_start();  // Iniciar sesión solo si no está iniciada
-                                                }
+                                    if (password_verify($password, $hashed_password)) {
+                                        if (session_status() == PHP_SESSION_NONE) {
+                                            session_start();  // Iniciar sesión solo si no está iniciada
+                                        }
 
-                                                // Guardar los datos del usuario en la sesión
-                                                $_SESSION['user_id'] = $id;
-                                                $_SESSION['nombre'] = $nombre; // Asegúrate de que $nombre esté definido
-                                                $_SESSION['apellido'] = $apellido; // Asegúrate de que $apellido esté definido
+                                        // Guardar los datos del usuario en la sesión
+                                        $_SESSION['user_id'] = $id;
+                                        $_SESSION['nombre'] = $nombre; // Asegúrate de que $nombre esté definido
+                                        $_SESSION['apellido'] = $apellido; // Asegúrate de que $apellido esté definido
 
-                                                // Redirigir al dashboard
-                                                header("Location: index.php");
-                                                exit;
-                                            }
+                                        // Redirigir al dashboard
+                                        header("Location: index.php");
+                                        exit;
+                                    }
 
                                             } else {
                                                 echo "<div class='alert alert-danger'>Contraseña incorrecta.</div>";
@@ -87,8 +87,6 @@
                                         }
 
                                         $stmt->close();
-                                        $conn->close();
-                                    }
                                     ?>
                                     <form method="POST" action="">
                                         <!-- Form Group (email address)-->
