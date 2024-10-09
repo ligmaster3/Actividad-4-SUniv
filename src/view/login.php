@@ -63,19 +63,22 @@
                                             $stmt->bind_result($id, $hashed_password);
                                             $stmt->fetch();
 
-                                            // Verificar la contraseña
+                                            // Al verificar la contraseña y antes de redirigir
                                             if (password_verify($password, $hashed_password)) {
-                                                // Iniciar sesión si la contraseña es correcta
                                                 if (session_status() == PHP_SESSION_NONE) {
                                                     session_start();  // Iniciar sesión solo si no está iniciada
                                                 }
-                                                
-                                                // Guardar el ID del usuario en la sesión
+
+                                                // Guardar los datos del usuario en la sesión
                                                 $_SESSION['user_id'] = $id;
-                                                
+                                                $_SESSION['nombre'] = $nombre; // Asegúrate de que $nombre esté definido
+                                                $_SESSION['apellido'] = $apellido; // Asegúrate de que $apellido esté definido
+
                                                 // Redirigir al dashboard
-                                                header("Location: dashboard.php");
+                                                header("Location: index.php");
                                                 exit;
+                                            }
+
                                             } else {
                                                 echo "<div class='alert alert-danger'>Contraseña incorrecta.</div>";
                                             }
