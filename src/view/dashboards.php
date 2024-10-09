@@ -170,25 +170,35 @@ $result = $conn->query($sql);
             </button>
         </div>
 
+        <!-- Tabla con Bootstrap y DataTables -->
         <?php if ($result->num_rows > 0): ?>
-        <table class="table table-striped">
-            <thead>
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
                 <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Edad</th>
+                    <th>Usuario</th>
                     <th>Email</th>
+                    <th>Año</th>
+                    <th>Carrera</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $usuarios = $result->fetch_all(MYSQLI_ASSOC);
-                foreach ($usuarios as $usuario): ?>
+                    $usuarios = $result->fetch_all(MYSQLI_ASSOC);
+                    foreach ($usuarios as $usuario): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($usuario['nombre']); ?></td>
-                    <td><?php echo htmlspecialchars($usuario['apellido']); ?></td>
-                    <td><?php echo htmlspecialchars($usuario['edad']); ?></td>
+                    <td><?php echo htmlspecialchars($usuario['nombre'] . " " . $usuario['apellido']); ?></td>
                     <td><?php echo htmlspecialchars($usuario['email']); ?></td>
+                    <td><?php echo htmlspecialchars($usuario['anio']); ?></td>
+                    <td><?php echo htmlspecialchars($usuario['carrera']); ?></td>
+                    <td>
+                        <a href="editar_usuario.php?id=<?php echo $usuario['id']; ?>" class="btn btn-sm btn-warning">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="eliminar_usuario.php?id=<?php echo $usuario['id']; ?>" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
