@@ -1,5 +1,66 @@
+<?php
+session_start();
+
+// Conexión a la base de datos (ajusta estos valores según tu configuración)
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "registros_academicos";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verificar la conexión
+if ($conn->connect_error) {
+    echo "Error de conexión a la base de datos";
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Función para validar el inicio de sesión
+function validarLogin($email, $password) {
+    global $conn;
+    $sql = "SELECT user_id, email_user, password_user, user_name, last_user FROM usuario WHERE email_user = ? AND Password_user = ? ";
+    $stmt = $conn->prepare($sql);
+    // Verificar si la preparación de la consulta fue exitosa
+    if ($stmt === false) {
+        die("Error al preparar la consulta: " . $conn->error);  
+    }
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Verifica si existe el usuario
+    if ($result->num_rows == 1) {
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['password_user'])) {
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['email'] = $user['email_user'];
+            $_SESSION['nombre'] = $user['user_name'];
+            $_SESSION['apellido'] = $user['last_user'];
+            return true;
+        }
+    }
+    return false;
+}
+
+// Procesar el formulario de inicio de sesión
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $password = $_POST['password']; // Usar password_hash() al almacenar contraseñas en la BD
+
+    // Llamar a la función validarLogin
+    if (validarLogin($email, $password)) {
+        // Redirigir al index si el login es exitoso
+        header("Location: /index.php");
+        echo '<h4 class="alert alert-warning">Login exitoso. Bienvenido </h4>' . $_SESSION['nombre'];
+        exit();
+    } else {
+        $error = "Credenciales inválidas";
+    }
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -20,7 +81,6 @@
     </script>
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <!-- <script src="/src/public/js/script.js" async></script> -->
 </head>
 
 <body class="bg-primary">
@@ -36,72 +96,13 @@
                                     <h3 class="fw-light my-4">Login</h3>
                                 </div>
                                 <p class="text-center text-white">Si no cuenta con un usuario, <a
-                                        href="/src/view/Sign up.php">Registrate</a>aqui</p>
+                                        href="/src/view/Sign up.php">Regístrate</a> aquí</p>
                                 <div class="card-body">
+                                    <!-- Mostrar mensaje de error si hay credenciales inválidas -->
+                                    <?php if (isset($error)) : ?>
+                                    <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
+                                    <?php endif; ?>
                                     <!-- Login form-->
-                                    <?php
-                                    session_start();  // Inicia la sesión si no se ha iniciado ya
-
-                                    // Verificar si el formulario ha sido enviado
-                                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                                        $server = "localhost";
-                                        $user = "root";
-                                        $password = "";
-                                        $database = "registros_academicos";
-
-                                        // Conexión a la base de datos
-                                        $conn = new mysqli($server, $user, $password, $database);
-
-                                        // Verificar conexión
-                                        if ($conn->connect_error) {
-                                            die("Conexión fallida: " . $conn->connect_error);
-                                        }
-
-                                        $email = $_POST['email'];
-                                        $password = $_POST['password'];
-
-                                        // Consulta para verificar el correo y obtener la contraseña encriptada y otros datos
-                                        $sql = "SELECT user_id, user_name, last_user, password_user FROM usuario WHERE email_user = ?";
-                                        $stmt = $conn->prepare($sql);
-
-                                        // Verificar si la preparación de la consulta fue exitosa
-                                        if ($stmt === false) {
-                                            die("Error al preparar la consulta: " . $conn->error);
-                                        }
-                                    
-                                        $stmt->bind_param("s", $email);
-                                        $stmt->execute();
-                                        $stmt->store_result();
-
-                                        // Verifica si se encontró el usuario
-                                        if ($stmt->num_rows == 1) {
-                                            // Vincula los resultados de la consulta
-                                            $stmt->bind_result($id, $nombre, $apellido, $hashed_password);
-                                            $stmt->fetch();
-
-                                            // Verifica si la contraseña es correcta
-                                            if (password_verify($password, $hashed_password)) {
-                                                // Guardar los datos del usuario en la sesión
-                                                $_SESSION['user_id'] = $id;
-                                                $_SESSION['nombre'] = $nombre;
-                                                $_SESSION['apellido'] = $apellido;
-
-                                                // Redirigir al index (index)
-                                                header("Location: /index.php");
-                                                exit;
-                                            } else {
-                                                echo "<div class='alert alert-danger'>Contraseña incorrecta.</div>";
-                                            }
-                                        } else {
-                                            echo "<div class='alert alert-danger'>No se encontró el usuario.</div>";
-                                        }
-
-                                        // Cerrar declaración y conexión
-                                        $stmt->close();
-                                        $conn->close();
-                                    }
-                                    ?>
-
                                     <form method="POST" action="">
                                         <!-- Form Group (email address)-->
                                         <div class="mb-3">
@@ -115,7 +116,6 @@
                                             <input class="form-control" id="inputPassword" type="password"
                                                 name="password" placeholder="Enter password" required>
                                         </div>
-
                                         <!-- Form Group (login box)-->
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                             <button type="submit" class="btn btn-primary">Login</button>
