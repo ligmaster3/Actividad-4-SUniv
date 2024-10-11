@@ -44,28 +44,46 @@ if (isset($_SESSION['user_id'])) {
         die("Conexión fallida: " . $conn->connect_error);
     }
 
-    $user_id = $_SESSION['user_id'];
-    $sql = "SELECT user_name, last_user, email_user FROM usuario WHERE user_id = ?";
+    $sql = "SELECT user_id, user_name, last_user, password_user FROM usuario WHERE email_user = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id);
+
+    // Verificar si la preparación de la consulta fue exitosa
+    if ($stmt === false) {
+        showNotification("Error al preparar la consulta", '#dc3545');
+        die("Error al preparar la consulta: " . $conn->error);
+    }
+
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $usuario = $result->fetch_assoc();
-        $nombre = $usuario['user_name'];
-        $apellido = $usuario['last_user'];
-        $email = $usuario['email_user'];
-        showNotification('Usuario autenticado', '#28a745');
+    // Verifica si se encontró el usuario
+    if ($result->num_rows == 1) {
+        $user = $result->fetch_assoc();
+        
+        // Verifica si la contraseña es correcta
+        if (password_verify($password, $user['password_user'])) {
+            // Guardar los datos del usuario en la sesión
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['nombre'] = $user['user_name'];
+            $_SESSION['apellido'] = $user['last_user'];
+
+            showNotification("Login exitoso. Bienvenido, " . $user['user_name'] . "!", '#28a745');
+            
+            // Redirigir al index
+            // header("Location: /index.php");
+            exit;
+        } else {
+            showNotification("Contraseña incorrecta", '#dc3545');
+        }
     } else {
-        // Esto no debería ocurrir normalmente, pero por si acaso
-        session_destroy();
-        header("Location: /src/view/login.php");
-        exit();
+        showNotification("No se encontró el usuario", '#dc3545');
     }
 
+    // Cerrar declaración y conexión
     $stmt->close();
     $conn->close();
+
 } else {
     // Usuario no logueado
     $nombre = "Invitado";
@@ -74,6 +92,7 @@ if (isset($_SESSION['user_id'])) {
     showNotification('Usuario invitado', '#ffc107');
     echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">Usuario No Registrado</div>';
 }
+
 ?>
 
 
@@ -90,11 +109,11 @@ if (isset($_SESSION['user_id'])) {
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown ">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 Cursos
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu bg-primary-subtle">
                                 <li><a class="dropdown-item" href="#">Creditos</a></li>
                             </ul>
                         </li>
@@ -140,9 +159,7 @@ if (isset($_SESSION['user_id'])) {
                                         <path d="M16 17l5-5-5-5m6 5H3"></path>
                                     </svg>
                                 </div>
-                                <p>
-                                    Logout
-                                </p>
+                                <a href="logout.php">Cerrar sesión</a>
                             </a>
                             <?php else: ?>
                             <a class="dropdown-item d-flex pl-1" href="/src/view/login.php">
@@ -169,6 +186,10 @@ if (isset($_SESSION['user_id'])) {
         <section>
             <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow">
                 <div class="lh-1">
+                    <h3>Bienvenido, <?= htmlspecialchars($nombre . ' ' . $apellido); ?>!</h3>
+                    <p>Tu correo: <?= htmlspecialchars($email); ?></p>
+                    <img src="/assets/img/logo/profile-1.png" alt="Avatar de <?= htmlspecialchars($nombre); ?>"
+                        class="rounded-circle" width="150">
                     <h1 class="h6 mb-0 text-white lh-1">¡Hola, <?php echo $nombre; ?> 👋</h1>
                 </div>
             </div>
