@@ -27,6 +27,18 @@ p {
     border-radius: 12px;
     box-shadow: 7px 7px 10px 3px #24004628
 }
+.maincontent .page-header {
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+}
+@media (width < 1000px) {
+  .maincontent .page-header {
+    background-color: white;
+    box-shadow: 7px 7px 10px 3px #24004628;
+  } 
+}
+
 .card h3 {
     text-align: center;
     font-weight: bold;
