@@ -75,7 +75,7 @@ $sql = "SELECT
     <title>Usuarios Registrados</title>
     <link rel="shortcut icon" href="/assets/img/logo/image+base46,fage4.png">
 
-    <link rel="stylesheet" type="text/css" href="/src/public/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/src/css/style.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
