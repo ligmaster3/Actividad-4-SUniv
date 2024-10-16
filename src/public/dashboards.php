@@ -93,7 +93,7 @@ $sql = "SELECT
 
 <body>
 
-    <header>
+<header>
         <nav class="navbar navbar-expand-lg bg-primary-subtle">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Sistema Academico</a>
@@ -105,11 +105,11 @@ $sql = "SELECT
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown ">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 Cursos
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu bg-primary-subtle">
                                 <li><a class="dropdown-item" href="#">Creditos</a></li>
                             </ul>
                         </li>
@@ -155,9 +155,7 @@ $sql = "SELECT
                                         <path d="M16 17l5-5-5-5m6 5H3"></path>
                                     </svg>
                                 </div>
-                                <p>
-                                    Logout
-                                </p>
+                                <a href="logout.php">Cerrar sesión</a>
                             </a>
                             <?php else: ?>
                             <a class="dropdown-item d-flex pl-1" href="/src/view/login.php">
@@ -180,10 +178,11 @@ $sql = "SELECT
     </header>
 
 
-    <!-- Código para mostrar la lista de usuarios registrados -->
+
+    <!-- Código para mostrar la lista de estudiantes registrados -->
     <div class="container shadow p-3 mb-5 bg-body-tertiary rounded">
         <div class="d-flex justify-content-between flex-nowrap">
-            <h1 class="my-4">Lista de Usuarios Registrados</h1>
+            <h1 class="my-4">Lista de Estudiantes Registrados</h1>
             <!-- Botón que abre el modal del formulario de registro -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                 data-bs-target="#registroAcademicoModal">
@@ -196,7 +195,7 @@ $sql = "SELECT
         <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
-                    <th>Usuario</th>
+                    <th>Estudiante</th>
                     <th>Email</th>
                     <th>Carrera</th>
                     <th>Profesor</th>
@@ -239,23 +238,27 @@ $sql = "SELECT
                     <form action="guardar_registro_academico.php" method="POST">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre del Estudiante</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el Nombre" required>
                         </div>
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido del Estudiante</label>
-                            <input type="text" class="form-control" id="apellido" name="apellido" required>
+                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingrese el Apellido" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Email del Estudiantes</label>
+                            <input class="form-control" id="inputEmailAddress" type="email" name="email" placeholder="Ingrese el Email" required>
                         </div>
                         <div class="mb-3">
                             <label for="curso" class="form-label">Nombre del carrera</label>
-                            <input type="text" class="form-control" id="curso" name="curso" required>
+                            <input type="text" class="form-control" id="curso" name="curso" placeholder="Ingrese el Carrera" required>
                         </div>
                         <div class="mb-3">
                             <label for="profesor" class="form-label">Nombre del Profesor</label>
-                            <input type="text" class="form-control" id="profesor" name="profesor" required>
+                            <input type="text" class="form-control" id="profesor" name="profesor" placeholder="Ingrese el Profesor" required>
                         </div>
                         <div class="mb-3">
                             <label for="anio" class="form-label">Año</label>
-                            <input type="number" class="form-control" id="anio" name="anio" required>
+                            <input type="number" class="form-control" id="anio" name="anio" placeholder="Ingrese el año cursado" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar Registro</button>
                     </form>
