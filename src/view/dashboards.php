@@ -206,15 +206,15 @@ $sql = "SELECT
             </thead>
             <tbody>
                 <?php
-            $usuarios = $result->fetch_all(MYSQLI_ASSOC);
-            foreach ($usuarios as $usuario): ?>
+            $estudiante = $result->fetch_all(MYSQLI_ASSOC);
+            foreach ($estudiante as $estudiante): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($usuario['Usuario']); ?></td>
-                    <td><?php echo htmlspecialchars($usuario['Email']); ?></td>
-                    <td><?php echo htmlspecialchars($usuario['Carrera']); ?></td>
-                    <td><?php echo htmlspecialchars($usuario['Profesor']); ?></td>
-                    <td><?php echo htmlspecialchars($usuario['Año']); ?></td>
-                    <td><?php echo htmlspecialchars($usuario['Fecha de Inscripción']); ?></td>
+                    <td><?php echo htmlspecialchars($estudiante['Usuario']); ?></td>
+                    <td><?php echo htmlspecialchars($estudiante['Email']); ?></td>
+                    <td><?php echo htmlspecialchars($estudiante['Carrera']); ?></td>
+                    <td><?php echo htmlspecialchars($estudiante['Profesor']); ?></td>
+                    <td><?php echo htmlspecialchars($estudiante['Año']); ?></td>
+                    <td><?php echo htmlspecialchars($estudiante['Fecha de Inscripción']); ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
