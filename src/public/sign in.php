@@ -1,49 +1,4 @@
-<?php
-include 'config/conexion.php';
 
-// Función para validar el inicio de sesión
-function validarLogin($email, $password) {
-    global $conn;
-    $sql = "SELECT user_id, email_user, password_user FROM usuario WHERE email_user = ? ";
-    $stmt = $conn->prepare($sql);
-    // Verificar si la preparación de la consulta fue exitosa
-    if ($stmt === false) {
-        die("Error al preparar la consulta: " . $conn->error);  
-    }
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Verifica si existe el usuario
-    if ($result->num_rows == 1) {
-        $user = $result->fetch_assoc();
-        if (password_verify($password, $user['password_user'])) {
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['email'] = $user['email_user'];
-            $_SESSION['nombre'] = $user['user_name'];
-            $_SESSION['apellido'] = $user['last_user'];
-            return true;
-        }
-    }
-    return false;
-}
-
-// Procesar el formulario de inicio de sesión
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password']; // Usar password_hash() al almacenar contraseñas en la BD
-
-    // Llamar a la función validarLogin
-    if (validarLogin($email, $password)) {
-        // Redirigir al index si el login es exitoso
-        header("Location: /index.php");
-        echo '<h4 class="alert alert-warning">Login exitoso. Bienvenido </h4>' . $_SESSION['nombre'];
-        exit();
-    } else {
-        $error = "Credenciales inválidas";
-    }
-}
-?>
 
 <!DOCTYPE html>
 <html lang="es">
