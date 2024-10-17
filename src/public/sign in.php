@@ -1,19 +1,5 @@
 <?php
-session_start();
-
-// Conexión a la base de datos (ajusta estos valores según tu configuración)
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "registros_academicos";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar la conexión
-if ($conn->connect_error) {
-    echo "Error de conexión a la base de datos";
-    die("Conexión fallida: " . $conn->connect_error);
-}
+include 'config/conexion.php';
 
 // Función para validar el inicio de sesión
 function validarLogin($email, $password) {
@@ -50,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Llamar a la función validarLogin
     if (validarLogin($email, $password)) {
         // Redirigir al index si el login es exitoso
-        header("Location: /prueba2.php");
+        header("Location: /index.php");
         echo '<h4 class="alert alert-warning">Login exitoso. Bienvenido </h4>' . $_SESSION['nombre'];
         exit();
     } else {
@@ -103,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
                                     <?php endif; ?>
                                     <!-- Login form-->
-                                    <form method="POST" action="/prueba2.php">
+                                    <form method="POST" action="/src/view/login.php">
                                         <!-- Form Group (email address)-->
                                         <div class="mb-3">
                                             <label class="small mb-1" for="inputEmailAddress">Email</label>
