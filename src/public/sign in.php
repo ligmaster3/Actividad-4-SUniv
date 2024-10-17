@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -48,8 +46,8 @@
                                         <!-- Form Group (email address)-->
                                         <div class="mb-3">
                                             <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                            <input class="form-control" id="inputEmailAddress" type="email" name="email"
-                                                placeholder="Enter email address" required>
+                                            <input class="form-control" id="inputEmailAddress" type="email"
+                                                name="email_user" placeholder=" Enter email address" required>
                                         </div>
                                         <!-- Form Group (password)-->
                                         <div class="mb-3">
