@@ -31,14 +31,14 @@ function validarLogin($email, $password) {
             return $user;
         } else {
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">La contraseña es incorrecta.</div>';
-            header("Refresh:1; url=/src/public/sign in.php");
+            // header("Refresh:1; url=/src/public/sign in.php");
         }
     } else {
         echo "<div class='alert alert-danger'>Error en el correo electronico: " . $stmt->error . "</div>";
     }
 }
 
-
+$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['email_user']) && isset($_POST['password'])) {
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // header("Refresh:2; url=/src/public/dashboards.php");
             exit();
         } else {
-           header('include "";');
+           header('locatio: /src/view/login.php?error ');
         }
     }
 }
