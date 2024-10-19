@@ -3,7 +3,7 @@
 session_start();
 
 // Incluir el archivo de conexión a la base de datos
-include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/config/conexion.php";
+include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/conexion.php";
 
 // Función para validar el inicio de sesión y devolver todos los datos del usuario
 function validarLogin($email, $password)
