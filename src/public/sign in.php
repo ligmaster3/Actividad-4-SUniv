@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-<?php 
-
-?>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Login</title>
-
     <link rel="shortcut icon" href="/assets/img/logo/users-alt (1).png">
     <link rel="stylesheet" type="text/css" href="/src/css/form.css">
 
@@ -21,8 +17,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    <script src="https://kit.fontaweysome.com/ae360af17e.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="/src/js/scipt.js"></script>
 </head>
 <script>
 document.addEventListener("backbutton", onBackKeyDown, false);
@@ -31,6 +28,7 @@ function onBackKeyDown() {
     console.log('No se puede ir atras');
 }
 </script>
+
 
 <body class="bg-primary" onload="checarIndex()">
     <div id="layoutAuthentication">
@@ -48,11 +46,13 @@ function onBackKeyDown() {
                                         href="/src/view/Sign up.php">Regístrate</a> aquí</p>
                                 <div class="card-body">
                                     <!-- Mostrar mensaje de error si hay credenciales inválidas -->
-                                    <?php if (isset($error)) : ?>
-                                    <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
+                                    <?php if (!isset($_SESSION['user_id']) && isset($error)): ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <?php echo htmlspecialchars($error); ?>
+                                    </div>
                                     <?php endif; ?>
                                     <!-- Login form-->
-                                    <form method="POST" action="/src/view/login.php">
+                                    <form method="POST" action="">
                                         <!-- Form Group (email address)-->
                                         <div class="mb-3">
                                             <label class="small mb-1" for="inputEmailAddress">Email</label>
