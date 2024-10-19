@@ -22,11 +22,22 @@
     <script src="/src/js/scipt.js"></script>
 </head>
 <script>
-document.addEventListener("backbutton", onBackKeyDown, false);
+(function() {
 
-function onBackKeyDown() {
-    console.log('No se puede ir atras');
-}
+
+    // Prevenir navegación hacia adelante
+    history.pushState(null, null, location.href);
+
+    // Manejar el evento de tecla de retroceso (para dispositivos móviles)
+    document.addEventListener("backbutton", onBackKeyDown, false);
+
+    function onBackKeyDown(e) {
+        e.preventDefault();
+        console.log('No se puede ir atrás');
+    }
+
+    console.log('Navegación hacia atrás y adelante deshabilitada');
+})()
 </script>
 
 
@@ -47,12 +58,13 @@ function onBackKeyDown() {
                                 <div class="card-body">
                                     <!-- Mostrar mensaje de error si hay credenciales inválidas -->
                                     <?php if (!isset($_SESSION['user_id']) && isset($error)): ?>
-                                    <div class="alert alert-danger" role="alert">
+                                    <div class="alert alert-danger text-center" role="alert">
                                         <?php echo htmlspecialchars($error); ?>
                                     </div>
                                     <?php endif; ?>
+
                                     <!-- Login form-->
-                                    <form method="POST" action="">
+                                    <form method="POST" action="/src/view/login.php">
                                         <!-- Form Group (email address)-->
                                         <div class="mb-3">
                                             <label class="small mb-1" for="inputEmailAddress">Email</label>
