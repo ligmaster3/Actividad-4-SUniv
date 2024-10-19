@@ -3,7 +3,7 @@
 session_start();
 
 // Incluir el archivo de conexión a la base de datos
-include '/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/config/conexion.php'; 
+include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/config/conexion.php";
 
 // Función para validar el inicio de sesión y devolver todos los datos del usuario
 function validarLogin($email, $password) {
@@ -31,10 +31,10 @@ function validarLogin($email, $password) {
             // Retornar los datos del usuario
             return $user;
         } else {
-            echo "La contraseña no es correcta.<br>";
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">La contraseña no es correcta.</div>';
         }
     } else {
-        echo "No se encontró un usuario con ese correo electrónico.<br>";
+        echo 'No se encontró un usuario con ese correo electrónico.<br>';
     }
 }
 
@@ -63,10 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // header("Refresh:2; url=/src/public/dashboards.php");
             exit();
         } else {
-            echo "Credenciales inválidas.";
+           header('include "";');
         }
-    } else {
-        echo "Por favor, completa todos los campos.";
     }
 }
 ?>
