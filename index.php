@@ -157,7 +157,9 @@ if (isset($_SESSION['user_id'])) {
                                         <path d="M16 17l5-5-5-5m6 5H3"></path>
                                     </svg>
                                 </div>
-                                <a href="logout.php">Cerrar sesión</a>
+                                <p>
+                                    Cerrar sesión
+                                </p>
                             </a>
                             <?php else: ?>
                             <a class="dropdown-item d-flex pl-1" href="/src/public/sign in.php">
