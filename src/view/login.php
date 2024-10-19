@@ -38,6 +38,8 @@ function validarLogin($email, $password) {
     }
 }
 
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['email_user']) && isset($_POST['password'])) {
         $correo = $_POST['email_user'];
@@ -54,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['email_user'] = $usuario['email_user'];
 
             // Mostrar los datos del usuario
-            echo "Inicio de sesión exitoso.<br>";
+            echo "<div class='alert alert-success'>¡Inscripción realizada con éxito!.</div>";
             echo "Bienvenido, " . htmlspecialchars($usuario['user_name']) . " " . htmlspecialchars($usuario['last_user']) . "<br>";
             echo "Edad: " . htmlspecialchars($usuario['edad_user']) . "<br>";
             echo "Email: " . htmlspecialchars($usuario['email_user']) . "<br>";
@@ -68,4 +70,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+
 ?>
