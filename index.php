@@ -35,6 +35,11 @@ function showNotification($message, $type) {
     }).showToast();</script>";
 }
 
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /src/view/login.php");
+    exit;
+}
 // Verificar si el usuario está logueado
 if (isset($_SESSION['user_id'])) {
     $conn = new mysqli($servername, $username, $password, $dbname);
