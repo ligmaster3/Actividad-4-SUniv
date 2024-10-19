@@ -8,7 +8,6 @@ include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/config/conexi
 // Función para validar el inicio de sesión y devolver todos los datos del usuario
 function validarLogin($email, $password) {
     global $conn;
-
     // Preparar la consulta para seleccionar el usuario basado en el email
     $stmt = $conn->prepare("SELECT user_id, user_name, last_user, edad_user, email_user, password_user FROM usuario WHERE email_user = ?");
     $stmt->bind_param("s", $email);
@@ -31,10 +30,11 @@ function validarLogin($email, $password) {
             // Retornar los datos del usuario
             return $user;
         } else {
-            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">La contraseña no es correcta.</div>';
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">La contraseña es incorrecta.</div>';
+            header("Refresh:1; url=/src/public/sign in.php");
         }
     } else {
-        echo 'No se encontró un usuario con ese correo electrónico.<br>';
+        echo "<div class='alert alert-danger'>Error en el correo electronico: " . $stmt->error . "</div>";
     }
 }
 
@@ -60,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "Email: " . htmlspecialchars($usuario['email_user']) . "<br>";
 
             // Redirigir al dashboard después de 2 segundos
+            
             // header("Refresh:2; url=/src/public/dashboards.php");
             exit();
         } else {
