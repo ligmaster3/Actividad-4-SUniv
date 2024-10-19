@@ -10,41 +10,45 @@ h1 {
 }
 
 h3 {
-    font-family: 'Roboto Slab';
+  font-family: 'Roboto Slab';
 }
-  
+
 p {
   font-size: 18px;
   line-height: 1.5;
   margin-bottom: 20px;
 }
+
 .row {
   align-items: center;
 }
+
 .container-xl .card {
-    background-color: #240046;
-    overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 7px 7px 10px 3px #24004628
+  background-color: #240046;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 7px 7px 10px 3px #24004628
 }
+
 .maincontent .page-header {
   background-color: transparent;
   box-shadow: none;
   border: none;
 }
+
 @media (width < 1000px) {
   .maincontent .page-header {
     background-color: white;
     box-shadow: 7px 7px 10px 3px #24004628;
-  } 
+  }
 }
 
 .card h3 {
-    text-align: center;
-    font-weight: bold;
-    font-weight: 900;
-    font-size: 30px;
-    color: white
+  text-align: center;
+  font-weight: bold;
+  font-weight: 900;
+  font-size: 30px;
+  color: white
 }
 
 
@@ -93,8 +97,14 @@ p {
   background-color: red;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Jacquard+24&family=Micro+5+Charted&display=swap');
+.error {
+  color: rgb(169, 68, 66);
+  width: 95%;
+  background: rgb(242, 222, 222);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 20px auto;
+}
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -109,6 +119,7 @@ p {
   line-height: 1.5;
   margin-bottom: 20px;
 }
+
 .row {
   align-items: center;
 }
@@ -167,7 +178,8 @@ input[type='number'] {
   height: 40px;
 }
 
-.btn, .btn-action{
+.btn,
+.btn-action {
   height: 40px;
   color: #fff;
   font-size: 1rem;
