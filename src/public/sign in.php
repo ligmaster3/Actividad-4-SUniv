@@ -18,11 +18,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontaweysome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
+<script>
+document.addEventListener("backbutton", onBackKeyDown, false);
 
-<body class="bg-primary">
+function onBackKeyDown() {
+    console.log('No se puede ir atras');
+}
+</script>
+
+<body class="bg-primary" onload="checarIndex()">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
