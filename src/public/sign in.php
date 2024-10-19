@@ -57,11 +57,9 @@
                                         href="/src/view/Sign up.php">Regístrate</a> aquí</p>
                                 <div class="card-body">
                                     <!-- Mostrar mensaje de error si hay credenciales inválidas -->
-                                    <?php if (!isset($_SESSION['user_id']) && isset($error)): ?>
-                                    <div class="alert alert-danger text-center" role="alert">
-                                        <?php echo htmlspecialchars($error); ?>
-                                    </div>
-                                    <?php endif; ?>
+                                    <?php if (isset($_GET['error'])) { ?>
+                                    <p class="error"><?php echo $_GET['error']; ?></p>
+                                    <?php } ?>
 
                                     <!-- Login form-->
                                     <form method="POST" action="/src/view/login.php">
