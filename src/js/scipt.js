@@ -7,4 +7,5 @@ function checarIndex(){
 if(sesion!=null){
     $(location).attr('href','registrodeDAtos.php')
 }
-}
+
+};
