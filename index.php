@@ -40,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
        
             header("Location: /index.php");
             exit();
+            if (isset($email)){
+                
+            }
         } else {
             header("Location: /index.php?error=Incorect User name or password");
             exit();
