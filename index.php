@@ -19,36 +19,68 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="/src/js/scipt.js"></script>
 </head>
+
 <?php
+// Iniciar sesión
 session_start();
+
 include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/conexion.php";
+// Función para validar el inicio de sesión y devolver todos los datos del usuario
+function validarLogin($email, $password)
+{
+	global $conn;
+	// Preparar la consulta para seleccionar el usuario basado en el email
+	$stmt = $conn->prepare("SELECT user_id, user_name, last_user, edad_user, email_user, password_user FROM usuario WHERE email_user = ?");
+	$stmt->bind_param("s", $email);
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	// Verificar si el usuario existe
+	if ($result->num_rows == 1) {
+		$user = $result->fetch_assoc();
+
+		// Verificar la contraseña usando password_verify()
+		if ($password === $user['password_user']) {
+			// Almacenar todos los datos del usuario en la sesión
+			$_SESSION['user_id'] = $user['user_id'];
+			$_SESSION['user_name'] = $user['user_name'];
+			$_SESSION['last_user'] = $user['last_user'];
+			$_SESSION['edad_user'] = $user['edad_user'];
+			$_SESSION['email_user'] = $user['email_user'];
+
+			// Retornar los datos del usuario
+			return $user;
+		} else {
+			echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">La contraseña es incorrecta.</div>';
+			// header("Refresh:1; url=/src/public/sign in.php");
+		}
+	} else {
+		echo "<div class='alert alert-danger'>Error en el correo electronico: " . $stmt->error . "</div>";
+	}
+}
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email_user'];
-    $password = $_POST['password'];
-
-    $sql = "SELECT * FROM usuario WHERE email_user = ? AND password_user = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $email, $password); // Usa un hash en la contraseña en producción
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        if (isset($_POST['email_user']) && isset($_POST['password'])) {
-            $_SESSION['email_user'] = $email;
-            $_SESSION['password'] = $password;
-            echo "";
-            header("Location: /src/public/home.php");
-            exit();
-        } else {
-            header("Location: /index.php?error=Incorect User name or password");
-            exit();
-        }
-    } else {
-        header("Location: /index.php?error=Incorect User name or password");
-    }
+	if (isset($_POST['email_user']) && isset($_POST['password'])) {
+		$correo = $_POST['email_user'];
+		$contrasena = $_POST['password'];
+		// Llamar a la función de validación
+		$usuario = validarLogin($correo, $contrasena);
+		if ($usuario) {
+			// Guardar los datos del usuario en la sesión
+			$_SESSION['user_id'] = $usuario['user_id'];
+			$_SESSION['user_name'] = $usuario['user_name'];
+			$_SESSION['last_user'] = $usuario['last_user'];
+			$_SESSION['email_user'] = $usuario['email_user'];
+			// Mostrar los datos del usuario
+			 header("location: /src/public/home.php");
+			exit();
+		} else {
+			header('location: /index.php ');
+		}
+	}
 }
 ?>
+
 
 
 <body class="bg-primary">
