@@ -20,17 +20,6 @@
 session_start();
 include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/conexion.php";
 
-// Función para mostrar notificaciones
-function showNotification($message, $type) {
-    echo "<script>Toastify({
-        text: '$message',
-        duration: 3000,
-        gravity: 'top',
-        position: 'right',
-        backgroundColor: '$type',
-    }).showToast();</script>";
-}
-
 // Verificar si el usuario ha iniciado sesión dentro mi login y si el caso mostralo en mi
 if (!isset($_SESSION['user_id'])) {
     header("Location: /index.php");
@@ -38,20 +27,13 @@ if (!isset($_SESSION['user_id'])) {
 }
 // Verificar si el usuario está logueado
 if (isset($_SESSION['user_id'])) {
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    if ($conn->connect_error) {
-        die("Conexión fallida: " . $conn->connect_error);
-    }
+    $nombre = $_SESSION['user_name'];
+    $apellido = $_SESSION['last_user'];
+    $email = $_SESSION['email_user'];
 
     $sql = "SELECT user_id, user_name, last_user, password_user FROM usuario WHERE email_user = ?";
     $stmt = $conn->prepare($sql);
 
-    // Verificar si la preparación de la consulta fue exitosa
-    if ($stmt === false) {
-        header("Error al preparar la consulta");
-        die("Error al preparar la consulta: " . $conn->error);
-    }
 
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -191,7 +173,9 @@ if (isset($_SESSION['user_id'])) {
                     <p>Tu correo: <?= htmlspecialchars($email); ?></p>
                     <img src="/assets/img/logo/profile-1.png" alt="Avatar de <?= htmlspecialchars($nombre); ?>"
                         class="rounded-circle" width="150">
-                    <h1 class="h6 mb-0 text-white lh-1">¡Hola, <?php echo $nombre; ?> 👋</h1>
+                    <h1 class="h6 mb-0 text-white lh-1">¡Hola, <?php echo $nombre; ?>. "" . <?php echo $apellido; ?> 👋
+                        .
+                    </h1>
                 </div>
             </div>
         </section>
