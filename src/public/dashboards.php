@@ -3,27 +3,27 @@
 session_start();
 
 include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/conexion.php";
-include '/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/registrodeDAtos.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido']; 
-    $correo = $_POST['correo'];
-    $evento_id = $_POST['evento_id'];
 
-    $sql_insert = "INSERT INTO inscripciones (evento_id, nombre, apellido, correo) VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql_insert);
-    $stmt->bind_param("isss", $evento_id, $nombre, $apellido, $correo);
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//     $nombre = $_POST['nombre'];
+//     $apellido = $_POST['apellido']; 
+//     $correo = $_POST['correo'];
+//     $evento_id = $_POST['evento_id'];
 
-    if ($stmt->execute()) {
-        header("Location: inscribir_evento.php?id=" . $evento_id . "&success=1");
-        exit;
-    } else {
-        echo "Error al guardar la inscripción.";
-    }
+//     $sql_insert = "INSERT INTO inscripciones (evento_id, nombre, apellido, correo) VALUES (?, ?, ?, ?)";
+//     $stmt = $conn->prepare($sql_insert);
+//     $stmt->bind_param("isss", $evento_id, $nombre, $apellido, $correo);
 
-    $stmt->close();
-}
+//     if ($stmt->execute()) {
+//         header("Location: inscribir_evento.php?id=" . $evento_id . "&success=1");
+//         exit;
+//     } else {
+//         echo "Error al guardar la inscripción.";
+//     }
+
+//     $stmt->close();
+// }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($_POST['email_user']) && isset($_POST['password'])) {
@@ -246,6 +246,9 @@ $sql = "SELECT
                     <h5 class="modal-title" id="registroAcademicoLabel">Registro Académico</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <?php 
+                include '/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/registrodeDAtos.php';
+                ?>
                 <div class="modal-body">
                     <!-- Formulario de Registro Académico -->
                     <form action="" method="POST">
@@ -279,7 +282,7 @@ $sql = "SELECT
                         <div class="mb-3">
                             <label for="profesor" class="form-label">Nombre del Profesor</label>
                             <input type="text" class="form-control" id="p.profesor" name="p.profesor"
-                                placeholder="Ingrese el Profesor" required>
+                                placeholder="Ingrese el Profesor" />
                         </div>
                         <div class="mb-3">
                             <label for="anio" class="form-label">Año</label>
