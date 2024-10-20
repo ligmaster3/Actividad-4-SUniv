@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['email_user']) && isset($_POST['password'])) {
             $_SESSION['email_user'] = $email;
             $_SESSION['password'] = $password;
-            echo "";
+       
             header("Location: /index.php");
             exit();
         } else {
