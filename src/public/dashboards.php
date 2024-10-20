@@ -2,45 +2,52 @@
 // Iniciar la sesión
 session_start();
 
-// Conexión a la base de datos
-$server = "localhost";
-$user = "root";
-$password = "";
-$database = "registros_academicos"; // Nombre de tu base de datos
+include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/conexion.php";
 
-$conn = new mysqli($server, $user, $password, $database);
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido']; 
+    $correo = $_POST['correo'];
+    $evento_id = $_POST['evento_id'];
 
-// Verificar si se ha enviado el formulario
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nombre = $_POST['user_name'];
-    $apellido = $_POST['last_user'];
-    $edad = $_POST['edad_user'];
-    $correo = $_POST['email_user'];
-    $contrasena = $_POST['password'];
-
-    // Consulta preparada para evitar SQL injection
-    $stmt = $conn->prepare("INSERT INTO usuario (user_name, last_user, edad_user, email_user, password_user) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssiss", $nombre, $apellido, $edad, $correo, $contrasena);
+    $sql_insert = "INSERT INTO inscripciones (evento_id, nombre, apellido, correo) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql_insert);
+    $stmt->bind_param("isss", $evento_id, $nombre, $apellido, $correo);
 
     if ($stmt->execute()) {
-        // Guardar el usuario en la sesión después de registrarse
-        $_SESSION['usuario'] = [
-            'nombre' => $nombre,
-            'apellido' => $apellido,
-            'email' => $correo
-        ];
-        echo '<div class="alert alert-success">Registro exitoso</div>';
-        header("Location: dashboards.php"); // Redirigir a la página del dashboard
+        header("Location: inscribir_evento.php?id=" . $evento_id . "&success=1");
+        exit;
     } else {
-        echo "<div class='alert alert-danger'>Error en el registro: " . $stmt->error . "</div>";
+        echo "Error al guardar la inscripción.";
     }
 
     $stmt->close();
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	if (isset($_POST['email_user']) && isset($_POST['password'])) {
+		$correo = $_POST['email_user'];
+		$contrasena = $_POST['password'];
+
+		// Llamar a la función de validación
+
+		if ($usuario) {
+			// Mostrar los datos del usuario si el login es exitoso
+			echo "<div class='alert alert-success'>¡Inicio de sesión exitoso!</div>";
+			echo "Bienvenido, " . htmlspecialchars($usuario['user_name']) . " " . htmlspecialchars($usuario['last_user']) . "<br>";
+			echo "Edad: " . htmlspecialchars($usuario['edad_user']) . "<br>";
+			echo "Email: " . htmlspecialchars($usuario['email_user']) . "<br>";
+
+			// Redirigir al dashboard después de 2 segundos
+			exit();
+		} else {
+			// Mostrar un mensaje de error y redirigir al login si hay credenciales inválidas
+			echo "<div class='alert alert-danger'>Credenciales inválidas. Inténtalo nuevamente.</div>";
+			$error = 'verifique que los datos sean correctos';
+			exit();
+		}
+	}
+}
 
 
 // Mostrar los registros de la tabla "estudiante"
@@ -93,7 +100,7 @@ $sql = "SELECT
 
 <body>
 
-<header>
+    <header>
         <nav class="navbar navbar-expand-lg bg-primary-subtle">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Sistema Academico</a>
@@ -200,7 +207,8 @@ $sql = "SELECT
                     <th>Carrera</th>
                     <th>Profesor</th>
                     <th>Año</th>
-                    <th>Fecha de Inscripción</th>
+                    <th class="text-center">Fecha de Inscripción</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -213,7 +221,11 @@ $sql = "SELECT
                     <td><?php echo htmlspecialchars($estudiante['Carrera']); ?></td>
                     <td><?php echo htmlspecialchars($estudiante['Profesor']); ?></td>
                     <td><?php echo htmlspecialchars($estudiante['Año']); ?></td>
-                    <td><?php echo htmlspecialchars($estudiante['Fecha de Inscripción']); ?></td>
+                    <td class="text-center"><?php echo htmlspecialchars($estudiante['Fecha de Inscripción']); ?></td>
+                    <td class="text-center">
+                        <a href="" class="btn btn-small btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="" class="btn btn-small btn-danger"><i class="fa-solid fa-trash"></i></a>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -238,27 +250,33 @@ $sql = "SELECT
                     <form action="guardar_registro_academico.php" method="POST">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre del Estudiante</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el Nombre" required>
+                            <input type="text" class="form-control" id="e.nombre" name="e.nombre"
+                                placeholder="Ingrese el Nombre" required>
                         </div>
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido del Estudiante</label>
-                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingrese el Apellido" required>
+                            <input type="text" class="form-control" id="e.apellido" name="e.apellido"
+                                placeholder="Ingrese el Apellido" required>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputEmailAddress">Email del Estudiantes</label>
-                            <input class="form-control" id="inputEmailAddress" type="email" name="email" placeholder="Ingrese el Email" required>
+                            <input class="form-control" id="inputEmailAddress" type="email" name="e.email"
+                                placeholder="Ingrese el Email" required>
                         </div>
                         <div class="mb-3">
                             <label for="curso" class="form-label">Nombre del carrera</label>
-                            <input type="text" class="form-control" id="curso" name="curso" placeholder="Ingrese el Carrera" required>
+                            <input type="text" class="form-control" id="curso" name="e.curso"
+                                placeholder="Ingrese el Carrera" required>
                         </div>
                         <div class="mb-3">
                             <label for="profesor" class="form-label">Nombre del Profesor</label>
-                            <input type="text" class="form-control" id="profesor" name="profesor" placeholder="Ingrese el Profesor" required>
+                            <input type="text" class="form-control" id="p.profesor" name="p.profesor"
+                                placeholder="Ingrese el Profesor" required>
                         </div>
                         <div class="mb-3">
                             <label for="anio" class="form-label">Año</label>
-                            <input type="number" class="form-control" id="anio" name="anio" placeholder="Ingrese el año cursado" required>
+                            <input type="number" class="form-control" id="a.anio" name="a.anio"
+                                placeholder="Ingrese el año cursado" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar Registro</button>
                     </form>
