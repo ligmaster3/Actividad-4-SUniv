@@ -247,7 +247,7 @@ $sql = "SELECT
                 </div>
                 <div class="modal-body">
                     <!-- Formulario de Registro Académico -->
-                    <form action="guardar_registro_academico.php" method="POST">
+                    <form action="" method="POST">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre del Estudiante</label>
                             <input type="text" class="form-control" id="e.nombre" name="e.nombre"
@@ -265,8 +265,15 @@ $sql = "SELECT
                         </div>
                         <div class="mb-3">
                             <label for="curso" class="form-label">Nombre del carrera</label>
-                            <input type="text" class="form-control" id="curso" name="e.curso"
-                                placeholder="Ingrese el Carrera" required>
+                            <input name="carrerass" list="carreras" type="search" />
+                            <datalist id="carreras">
+                                <option value="Enfermeria"></option>
+                                <option value="Educacion Fisica"></option>
+                                <option value="Ingles"></option>
+                                <option value="Informatica"></option>
+                                <option value="Matematicas"></option>
+                                <option value="Maestria"></option>
+                            </datalist>
                         </div>
                         <div class="mb-3">
                             <label for="profesor" class="form-label">Nombre del Profesor</label>
@@ -278,7 +285,8 @@ $sql = "SELECT
                             <input type="number" class="form-control" id="a.anio" name="a.anio"
                                 placeholder="Ingrese el año cursado" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Guardar Registro</button>
+                        <button type="submit" class="btn btn-primary" id="btnRegistrar" name="btnRegistrar">Guardar
+                            Registro</button>
                     </form>
                 </div>
             </div>
