@@ -31,7 +31,7 @@ function showNotification($message, $type) {
     }).showToast();</script>";
 }
 
-// Verificar si el usuario ha iniciado sesión
+// Verificar si el usuario ha iniciado sesión dentro mi login y si el caso mostralo en mi
 if (!isset($_SESSION['user_id'])) {
     header("Location: /index.php");
     exit;
@@ -49,7 +49,7 @@ if (isset($_SESSION['user_id'])) {
 
     // Verificar si la preparación de la consulta fue exitosa
     if ($stmt === false) {
-        showNotification("Error al preparar la consulta", '#dc3545');
+        header("Error al preparar la consulta");
         die("Error al preparar la consulta: " . $conn->error);
     }
 
@@ -68,16 +68,16 @@ if (isset($_SESSION['user_id'])) {
             $_SESSION['nombre'] = $user['user_name'];
             $_SESSION['apellido'] = $user['last_user'];
 
-            showNotification("Login exitoso. Bienvenido, " . $user['user_name'] . "!", '#28a745');
+            header("Login exitoso. Bienvenido, " . $user['user_name'] . "!");
             
             // Redirigir al index
             // header("Location: /index.php");
             exit;
         } else {
-            showNotification("Contraseña incorrecta", '#dc3545');
+           header("Contraseña incorrecta");
         }
     } else {
-        showNotification("No se encontró el usuario", '#dc3545');
+        header("No se encontró el usuario");
     }
 
     // Cerrar declaración y conexión
@@ -89,7 +89,7 @@ if (isset($_SESSION['user_id'])) {
     $nombre = "Invitado";
     $apellido = "";
     $email = "No disponible";
-    showNotification('Usuario invitado', '#ffc107');
+    header('Usuario invitado');
 }
 
 ?>
@@ -163,7 +163,7 @@ if (isset($_SESSION['user_id'])) {
                                 </p>
                             </a>
                             <?php else: ?>
-                            <a class="dropdown-item d-flex pl-1" href="/src/public/sign in.php">
+                            <a class="dropdown-item d-flex pl-1" href="/index.php">
                                 <!-- ... (puedes agregar un ícono de Login) ... -->
                                 <div class="dropdown-item-icon px-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
