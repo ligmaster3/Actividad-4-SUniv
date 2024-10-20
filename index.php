@@ -22,7 +22,7 @@
 <?php
 session_start();
 include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/conexion.php";
-
+$error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email_user'];
     $password = $_POST['password'];
@@ -37,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['email_user']) && isset($_POST['password'])) {
             $_SESSION['email_user'] = $email;
             $_SESSION['password'] = $password;
-       
-            header("Location: /index.php");
+            echo "";
+            header("Location: /src/public/home.php");
             exit();
         } else {
             header("Location: /index.php?error=Incorect User name or password");
@@ -66,39 +66,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <p class="text-center text-white">Si no cuenta con un usuario, <a
                                         href="/src/view/Sign up.php">Regístrate</a> aquí</p>
                                 <div class="card-body">
-
                                     <!-- Mostrar mensaje de error si las credenciales son inválidas -->
-                                    <?php if (isset($error)): ?>
+                                    <?php if (!empty($error)): ?>
                                     <div class="alert alert-danger text-center"><?php echo htmlspecialchars($error); ?>
                                     </div>
+                                    <?php endif; ?>
+
+                                    <!-- Login form-->
+                                    <form method="POST" action="">
+                                        <!-- Form Group (email address)-->
+                                        <div class="mb-3">
+                                            <label class="small mb-1" for="inputEmailAddress">Email</label>
+                                            <input class="form-control" id="inputEmailAddress" type="email"
+                                                name="email_user" placeholder="Enter email address" required>
+                                        </div>
+                                        <!-- Form Group (password)-->
+                                        <div class="mb-3">
+                                            <label class="small mb-1" for="inputPassword">Password</label>
+                                            <input class="form-control" id="inputPassword" type="password"
+                                                name="password" placeholder="Enter password" required>
+                                        </div>
+                                        <!-- Form Group (login box)-->
+                                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                            <button type="submit" class="btn btn-primary">Login</button>
+                                        </div>
+                                    </form>
                                 </div>
-                                <?php endif; ?>
-                                <!-- Login form-->
-                                <form method="POST" action="">
-                                    <!-- Form Group (email address)-->
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                        <input class="form-control" id="inputEmailAddress" type="email"
-                                            name="email_user" placeholder="Enter email address" required>
-                                    </div>
-                                    <!-- Form Group (password)-->
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="inputPassword">Password</label>
-                                        <input class="form-control" id="inputPassword" type="password" name="password"
-                                            placeholder="Enter password" required>
-                                    </div>
-                                    <!-- Form Group (login box)-->
-                                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <button type="submit" class="btn btn-primary">Login</button>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+            </main>
         </div>
-        </main>
-    </div>
     </div>
 </body>
 
