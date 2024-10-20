@@ -3,7 +3,7 @@
 session_start();
 
 include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/conexion.php";
-include '';
+include '/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/registrodeDAtos.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'];
