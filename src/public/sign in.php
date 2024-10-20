@@ -8,11 +8,9 @@
     <title>Login</title>
     <link rel="shortcut icon" href="/assets/img/logo/users-alt (1).png">
     <link rel="stylesheet" type="text/css" href="/src/css/form.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
@@ -21,27 +19,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="/src/js/scipt.js"></script>
 </head>
-<script>
-(function() {
 
-
-    // Prevenir navegación hacia adelante
-    history.pushState(null, null, location.href);
-
-    // Manejar el evento de tecla de retroceso (para dispositivos móviles)
-    document.addEventListener("backbutton", onBackKeyDown, false);
-
-    function onBackKeyDown(e) {
-        e.preventDefault();
-        console.log('No se puede ir atrás');
-    }
-
-    console.log('Navegación hacia atrás y adelante deshabilitada');
-})()
-</script>
-
-
-<body class="bg-primary" onload="checarIndex()">
+<body class="bg-primary">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
@@ -56,20 +35,19 @@
                                 <p class="text-center text-white">Si no cuenta con un usuario, <a
                                         href="/src/view/Sign up.php">Regístrate</a> aquí</p>
                                 <div class="card-body">
-                                    <!-- Mostrar mensaje de error si hay credenciales inválidas -->
-                                    <?php if (!isset($_SESSION['user_id']) && isset($error)): ?>
-                                    <div class="alert alert-danger show" role="alert">
-                                        <?php echo htmlspecialchars($error); ?>
+
+                                    <!-- Mostrar mensaje de error si las credenciales son inválidas -->
+                                    <?php if (isset($error)): ?>
+                                    <div class="alert alert-danger text-center"><?php echo $error; ?>
                                     </div>
                                     <?php endif; ?>
-
                                     <!-- Login form-->
-                                    <form method="POST" action="/src/view/login.php">
+                                    <form method="POST" action="">
                                         <!-- Form Group (email address)-->
                                         <div class="mb-3">
                                             <label class="small mb-1" for="inputEmailAddress">Email</label>
                                             <input class="form-control" id="inputEmailAddress" type="email"
-                                                name="email_user" placeholder=" Enter email address" required>
+                                                name="email_user" placeholder="Enter email address" required>
                                         </div>
                                         <!-- Form Group (password)-->
                                         <div class="mb-3">
