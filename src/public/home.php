@@ -33,7 +33,7 @@ function showNotification($message, $type) {
 
 // Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['user_id'])) {
-    header("Location: /src/view/login.php");
+    header("Location: /index.php");
     exit;
 }
 // Verificar si el usuario está logueado
