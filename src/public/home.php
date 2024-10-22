@@ -180,7 +180,10 @@ if (isset($_SESSION['user_id'])) {
             </div>
         </section>
         <section id="">
+
             <!-- Contenido principal -->
+            <?php include '/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/public/dashboards.php' ?>
+
         </section>
     </main>
 </body>
