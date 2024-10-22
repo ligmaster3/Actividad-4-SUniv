@@ -50,7 +50,7 @@ if (isset($_SESSION['user_id'])) {
             $_SESSION['nombre'] = $user['user_name'];
             $_SESSION['apellido'] = $user['last_user'];
 
-            header("Login exitoso. Bienvenido, " . $user['user_name'] . "!");
+           echo '<script>alert("welcome");</script>';
             
             // Redirigir al index
             // header("Location: /index.php");
