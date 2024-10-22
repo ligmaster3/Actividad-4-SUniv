@@ -35,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errores[] = "El correo electrónico no tiene un formato válido.";
         }
 
-       
 
         if (empty($errores)) {
             // Preparar la consulta para seleccionar el usuario basado en el email
