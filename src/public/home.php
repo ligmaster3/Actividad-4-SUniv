@@ -169,13 +169,13 @@ if (isset($_SESSION['user_id'])) {
         <section>
             <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow">
                 <div class="lh-1">
-                    <h3>Bienvenido, <?= htmlspecialchars($nombre . ' ' . $apellido); ?>!</h3>
-                    <p>Tu correo: <?= htmlspecialchars($email); ?></p>
+                    <h3>Bienvenido, <?= htmlspecialchars($nombre . ' ' . $apellido); ?>!👋</h3>
+                    <!-- <p>Tu correo: <?= htmlspecialchars($email); ?></p>
                     <img src="/assets/img/logo/profile-1.png" alt="Avatar de <?= htmlspecialchars($nombre); ?>"
                         class="rounded-circle" width="150">
-                    <h1 class="h6 mb-0 text-white lh-1">¡Hola, <?php echo $nombre; ?>. "" . <?php echo $apellido; ?> 👋
+                    <h1 class="h6 mb-0 text-white lh-1">¡Hola, <?php echo $nombre; ?> <?php echo $apellido; ?> 
                         .
-                    </h1>
+                    </h1> -->
                 </div>
             </div>
         </section>
