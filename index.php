@@ -19,67 +19,57 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="/src/js/scipt.js"></script>
 </head>
-
 <?php
-// Iniciar sesión
 session_start();
-
 include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/conexion.php";
-// Función para validar el inicio de sesión y devolver todos los datos del usuario
-function validarLogin($email, $password)
-{
-	global $conn;
-	// Preparar la consulta para seleccionar el usuario basado en el email
-	$stmt = $conn->prepare("SELECT user_id, user_name, last_user, edad_user, email_user, password_user FROM usuario WHERE email_user = ?");
-	$stmt->bind_param("s", $email);
-	$stmt->execute();
-	$result = $stmt->get_result();
 
-	// Verificar si el usuario existe
-	if ($result->num_rows == 1) {
-		$user = $result->fetch_assoc();
+$errores = [];
 
-		// Verificar la contraseña usando password_verify()
-		if ($password === $user['password_user']) {
-			// Almacenar todos los datos del usuario en la sesión
-			$_SESSION['user_id'] = $user['user_id'];
-			$_SESSION['user_name'] = $user['user_name'];
-			$_SESSION['last_user'] = $user['last_user'];
-			$_SESSION['edad_user'] = $user['edad_user'];
-			$_SESSION['email_user'] = $user['email_user'];
-
-			// Retornar los datos del usuario
-			return $user;
-		} else {
-			echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">La contraseña es incorrecta.</div>';
-			// header("Refresh:1; url=/src/public/sign in.php");
-		}
-	} else {
-		echo "<div class='alert alert-danger'>Error en el correo electronico: " . $stmt->error . "</div>";
-	}
-}
-$error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	if (isset($_POST['email_user']) && isset($_POST['password'])) {
-		$correo = $_POST['email_user'];
-		$contrasena = $_POST['password'];
-		// Llamar a la función de validación
-		$usuario = validarLogin($correo, $contrasena);
-		if ($usuario) {
-			// Guardar los datos del usuario en la sesión
-			$_SESSION['user_id'] = $usuario['user_id'];
-			$_SESSION['user_name'] = $usuario['user_name'];
-			$_SESSION['last_user'] = $usuario['last_user'];
-			$_SESSION['email_user'] = $usuario['email_user'];
-			// Mostrar los datos del usuario
-			 header("location: /src/public/home.php");
-			exit();
-		} else {
-			header('location: /index.php ');
-		}
-	}
+    if (isset($_POST['email_user']) && isset($_POST['password'])) {
+        $correo = trim($_POST['email_user']);
+        $contrasena = trim($_POST['password']);
+
+        // Validar formato de correo electrónico
+        if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+            $errores[] = "El correo electrónico no tiene un formato válido.";
+        }
+
+       
+
+        if (empty($errores)) {
+            // Preparar la consulta para seleccionar el usuario basado en el email
+            $stmt = $conn->prepare("SELECT user_id, user_name, last_user, edad_user, email_user, password_user FROM usuario WHERE email_user = ?");
+            $stmt->bind_param("s", $correo);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $user = $result->fetch_assoc();
+                // Verifica la contraseña usando password_verify
+                if (password_verify($contrasena, $user['password_user'])) {
+                    $_SESSION['user_id'] = $user['user_id'];
+                    $_SESSION['user_name'] = $user['user_name'];
+                    $_SESSION['last_user'] = $user['last_user'];
+                    $_SESSION['edad_user'] = $user['edad_user'];
+                    $_SESSION['email_user'] = $user['email_user'];
+                    // Redirigir si todo es correcto
+                    header("location: /src/public/home.php");
+                    exit();
+                } else {
+                    $errores[] = "Contraseña incorrecta. Por favor, intente de nuevo.";
+                }
+            } else {
+                $errores[] = "No se encontró ningún usuario con este correo electrónico.";
+            }
+        }
+    } else {
+        $errores[] = "Por favor complete ambos campos.";
+    }
 }
 ?>
+
+
 
 
 
@@ -98,9 +88,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <p class="text-center text-white">Si no cuenta con un usuario, <a
                                         href="/src/view/Sign up.php">Regístrate</a> aquí</p>
                                 <div class="card-body">
-                                    <!-- Mostrar mensaje de error si las credenciales son inválidas -->
-                                    <?php if (!empty($error)): ?>
-                                    <div class="alert alert-danger text-center"><?php echo htmlspecialchars($error); ?>
+                                    <?php if (!empty($errores)): ?>
+                                    <div class="alert alert-danger">
+                                        <?php foreach ($errores as $error): ?>
+                                        <li><?php echo $error; ?></li>
+                                        <?php endforeach; ?>
                                     </div>
                                     <?php endif; ?>
 
