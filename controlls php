@@ -1,0 +1,63 @@
+<?php
+include 'config/connection.php';
+$id = $_POST['id'];
+$nombre = $_POST['nombre'];
+$precio = $_POST['precio'];
+function Insertar() {
+    if (isset($_POST['insertar'])) {
+        $sql_insert = "INSERT INTO producto (nombre, precio) VALUES ($nombre, $precio)";
+        $stmt = mysqli_query($conn, $sql_insert);
+    }
+}
+function Consultas() {
+    if (isset($_POST['consultar'])) {
+       
+        $sql_check = "SELECT * FROM producto ";
+        $stmt = mysqli_query($conn, $sql_check);
+        // Procesar los resultados y enviarlos al cliente
+    }
+}
+function Actualizar() {
+    if (isset($_POST['actualizar'])) {
+       
+        $sql_update = "UPDATE tabla SET nombre = $nombre, precio =$precio WHERE id = '$id'";
+        $stmt = mysqli_query($conn, $sql_update);
+       
+    }
+}
+function Eliminar() {
+    if (isset($_POST['eliminar'])) {
+     
+        $sql_delete = "DELETE FROM producto WHERE id = '$id'";
+        $stmt = mysqli_prepare($conn, $sql_delete);
+       
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="iniciar.css">
+</head>
+<body>
+    <form action="" method="POST">
+        <h2>Iniciar Sesión</h2>
+        <label>ID:</label>
+        <input type="text" name="id">
+        <label>Nombre Producto:</label>
+        <input type="text" name="nombre">
+        <label>Precio:</label>
+        <input type="text" name="precio">
+        <br>
+        <button type="button" class="btn btn-primary" name="insertar" value="INSERTAR">Insertar</button>
+        <button type="button" class="btn btn-primary" name="consultar" value="CONSULTAR">Consultar</button>
+        <button type="button" class="btn btn-primary" name="actualizar" value="ACTUALIZAR">ACtualizar</button>
+        <button type="button" class="btn btn-primary" name="eliminar" value="ELIMINAR">Eliminar</button>
+        <br>
+    </form>
+</body>
+</html>
+
+
