@@ -21,7 +21,8 @@
 </head>
 <?php
 session_start();
-include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/conexion.php";
+
+include_once '../Actividad-4-SUniv/src/view/conexion.php';
 
 $errores = [];
 
@@ -88,11 +89,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         href="/src/view/Sign up.php">Regístrate</a> aquí</p>
                                 <div class="card-body">
                                     <?php if (!empty($errores)): ?>
-                                    <div class="alert alert-danger">
-                                        <?php foreach ($errores as $error): ?>
-                                        <li><?php echo $error; ?></li>
-                                        <?php endforeach; ?>
-                                    </div>
+                                        <div class="alert alert-danger">
+                                            <?php foreach ($errores as $error): ?>
+                                                <li><?php echo $error; ?></li>
+                                            <?php endforeach; ?>
+                                        </div>
                                     <?php endif; ?>
 
                                     <!-- Login form-->
