@@ -22,58 +22,15 @@ include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/cone
 
 // Verificar si el usuario ha iniciado sesión dentro mi login y si el caso mostralo en mi
 if (!isset($_SESSION['user_id'])) {
-    header("Location: /index.php");
-    exit;
-}
-// Verificar si el usuario está logueado
-if (isset($_SESSION['user_id'])) {
-    $nombre = $_SESSION['user_name'];
-    $apellido = $_SESSION['last_user'];
-    $email = $_SESSION['email_user'];
-
-    $sql = "SELECT user_id, user_name, last_user, password_user FROM usuario WHERE email_user = ?";
-    $stmt = $conn->prepare($sql);
-
-
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Verifica si se encontró el usuario
-    if ($result->num_rows == 1) {
-        $user = $result->fetch_assoc();
-        
-        // Verifica si la contraseña es correcta
-        if (password_verify($password, $user['password_user'])) {
-            // Guardar los datos del usuario en la sesión
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['nombre'] = $user['user_name'];
-            $_SESSION['apellido'] = $user['last_user'];
-
-           echo '<script>alert("welcome");</script>';
-            
-            // Redirigir al index
-            // header("Location: /index.php");
-            exit;
-        } else {
-           header("Contraseña incorrecta");
-        }
-    } else {
-        header("No se encontró el usuario");
-    }
-
-    // Cerrar declaración y conexión
-    $stmt->close();
-    $conn->close();
-
-} else {
-    // Usuario no logueado
-    $nombre = "Invitado";
-    $apellido = "";
-    $email = "No disponible";
-    header('Usuario invitado');
+    header("Location: index.php");
+    exit();
 }
 
+$user_id = $_SESSION['user_id'];
+
+$stmt = $pdo->prepare("SELECT * FROM usuarios WHERE id = ?");
+$stmt->execute([$user_id]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 

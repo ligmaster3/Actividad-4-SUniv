@@ -1,5 +1,1 @@
-# Actividad-4-SUniv
- 
-index. aqui debe mostra el dashoard que refleja la informacion de el curso y los profesores
-
-dashborad debe mostrar la el estudiante,email,el anio, carrera,, 
+  <p class="lead mb-0"><a href="#" class="text-body-emphasis fw-bold">Continue reading...</a></p>

@@ -33,8 +33,9 @@
                     <div class="col-md-4">
                         <div class="card shadow p-2">
                             <div class="card-body text-center">
-                                <img src="https://via.placeholder.com/150" alt="Profile"
-                                    class="rounded-circle img-fluid mb-3">
+                                <!-- <img src="https://via.placeholder.com/150" alt="Profile"
+                                    class="rounded-circle img-fluid mb-3"> -->
+                                <input type="file" accept="image/*">
                                 <p class="card-text">JPG or PNG no larger than 5 MB</p>
                                 <button class="btn btn-primary">Upload new image</button>
                             </div>
