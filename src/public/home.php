@@ -18,13 +18,10 @@
 </head>
 <?php
 session_start();
-include "/Users/eniga/OneDrive/Documentos/GitHub/Actividad-4-SUniv/src/view/conexion.php";
+include "../view/conexion.php";
 
 // Verificar si el usuario ha iniciado sesión dentro mi login y si el caso mostralo en mi
-if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
-}
+
 
 $user_id = $_SESSION['user_id'];
 
@@ -77,42 +74,42 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                             <div class="dropdown-divider"></div>
                             <?php if (isset($_SESSION['user_id'])): ?>
 
-                            <a class="dropdown-item d-flex pl-1" href="/src/view/perfil.php">
-                                <div class="dropdown-item-icon px-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-log-out">
-                                        <path d="M16 17l5-5-5-5m6 5H3"></path>
-                                    </svg>
-                                </div>
-                                <p>
-                                    Account
-                                </p>
-                            </a>
-                            <a class="dropdown-item d-flex pl-1" href="/src/view/logout.php">
-                                <div class="dropdown-item-icon px-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-log-out">
-                                        <path d="M16 17l5-5-5-5m6 5H3"></path>
-                                    </svg>
-                                </div>
-                                <p>
-                                    Cerrar sesión
-                                </p>
-                            </a>
+                                <a class="dropdown-item d-flex pl-1" href="/src/view/perfil.php">
+                                    <div class="dropdown-item-icon px-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-log-out">
+                                            <path d="M16 17l5-5-5-5m6 5H3"></path>
+                                        </svg>
+                                    </div>
+                                    <p>
+                                        Account
+                                    </p>
+                                </a>
+                                <a class="dropdown-item d-flex pl-1" href="/src/view/logout.php">
+                                    <div class="dropdown-item-icon px-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-log-out">
+                                            <path d="M16 17l5-5-5-5m6 5H3"></path>
+                                        </svg>
+                                    </div>
+                                    <p>
+                                        Cerrar sesión
+                                    </p>
+                                </a>
                             <?php else: ?>
-                            <a class="dropdown-item d-flex pl-1" href="/index.php">
-                                <!-- ... (puedes agregar un ícono de Login) ... -->
-                                <div class="dropdown-item-icon px-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-log-out">
-                                        <path d="M16 17l5-5-5-5m6 5H3"></path>
-                                    </svg>
-                                </div>
-                                <p>Login</p>
-                            </a>
+                                <a class="dropdown-item d-flex pl-1" href="/index.php">
+                                    <!-- ... (puedes agregar un ícono de Login) ... -->
+                                    <div class="dropdown-item-icon px-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-log-out">
+                                            <path d="M16 17l5-5-5-5m6 5H3"></path>
+                                        </svg>
+                                    </div>
+                                    <p>Login</p>
+                                </a>
                             <?php endif; ?>
                         </div>
                     </div>
